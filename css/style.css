@@ -1,3 +1,10 @@
+:root {
+  --firstColor: #064420;
+  --firstHoverColor: #09632e;
+  --secondColor: #8abc4840;
+  --errorColor: #FD5E53;
+}
+
 @font-face {
   font-family: 'icomoon';
   src: url("../fonts/icomoon/icomoon.eot?srf3rx");
@@ -17,7 +24,8 @@ body {
   font-size: 14px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.5);
-  background: whitesmoke;
+  /* background: whitesmoke; */
+  background: white;
 }
 @media screen and (max-width: 992px) {
   body {
@@ -26,7 +34,8 @@ body {
 }
 
 a {
-  color: #228896;
+  /* color: #228896; */
+  color: var(--firstColor);
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
@@ -96,11 +105,12 @@ figure figcaption {
   bottom: 0;
   top: 0;
   left: 0;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   z-index: 1001;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
+  background-color: var(--secondColor)
 }
 @media screen and (max-width: 1200px) {
   #fh5co-aside {
@@ -174,7 +184,8 @@ figure figcaption {
   bottom: 7px;
   left: 10px;
   right: 10px;
-  background-color: #228896;
+  /* background-color: #228896; */
+  background-color: var(--firstColor);
   visibility: hidden;
   -webkit-transform: scaleX(0);
   -moz-transform: scaleX(0);
@@ -471,6 +482,13 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
   width: 100%;
   float: left;
   background: #fff;
+  /* background: var(--secondColor); */
+  /* box-shadow: 0px 1px 0px #999999; */
+  border: 1px solid #dddddd;
+}
+.blog-entry:hover {
+  box-shadow: 0px 1px 4px #999;
+
 }
 @media screen and (max-width: 768px) {
   .blog-entry {
@@ -615,7 +633,8 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
 }
 
 .fh5co-heading-colored {
-  color: #228896;
+  /* color: #228896; */
+  color: var(--firstColor);
   font-size: 30px;
 }
 
@@ -880,13 +899,16 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
 }
 
 .btn-primary {
-  background: #228896;
+  /* background: #228896; */
+  background: var(--firstColor);
   color: #fff;
-  border: 2px solid #228896;
+  border: 2px solid var(--firstColor);
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-  background: #279bab !important;
-  border-color: #279bab !important;
+  /* background: #279bab !important;
+  border-color: #279bab !important; */
+  background: var(--firstHoverColor) !important;
+  border-color: var(--firstHoverColor) !important;
 }
 .btn-primary.btn-outline {
   background: transparent;
