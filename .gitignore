@@ -1,0 +1,10 @@
+# 이 파일은 git에 push하고싶지 않은 파일들을 명시해놓은 파일입니다.
+# 여기에 적혀있는 파일들은 git에 의해 관리되지 않고 status 명령어로 확인해도 없는 파일 취급하여 무시합니다.
+
+.vscode
+about.html
+blog.html
+contact.html
+portfolio.html
+README.txt
+.DS_Store
