@@ -7,8 +7,8 @@
 }
 .blog-entry .desc h3 {
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border: 1px solid #fff0;
 }
 .wrapper-category a {
