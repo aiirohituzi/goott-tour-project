@@ -27,6 +27,43 @@
 <!-- 
     contentTypeId : 관광타입
       39 : 음식점
+    areaCode : 광역시/도
+      1 : 서울
+      2 : 인천
+      3 : 대전
+      4 : 대구
+      5 : 광주
+      6 : 부산
+      7 : 울산
+      8 : 세종특별자치시
+      9 : 경기도
+      10 : 강원특별자치도
+      11 : 충청북도
+      12 : 충청남도
+      13 : 경상북도
+      14 : 경상남도
+      15 : 전라북도
+      16 : 전라남도
+      17 : 제주도
+    sigunguCode : 시/군/구
+      areaCode를 기준으로 하단에 표시된 api를 통해 얻어올 수 있음
+      1 : 서울 : 25개
+      2 : 인천 : 10개
+      3 : 대전 : 5개
+      4 : 대구 : 9개
+      5 : 광주 : 5개
+      6 : 부산 : 16개
+      7 : 울산 : 5개
+      8 : 세종특별자치시 : 1개
+      9 : 경기도 : 없음
+      10 : 강원특별자치도 : 없음
+      11 : 충청북도 : 없음
+      12 : 충청남도 : 없음
+      13 : 경상북도 : 없음
+      14 : 경상남도 : 없음
+      15 : 전라북도 : 없음
+      16 : 전라남도 : 없음
+      17 : 제주도 : 없음
     cat1 : 대분류 코드
       A05 : 음식
     cat2 : 중분류 코드
@@ -40,3 +77,9 @@
       A05020900 : 카페/전통찻집
       A05021000 : 클럽
    -->
+<!-- 
+  지역코드(광역시/시) : areaCode 받아오는 api url
+http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest
+지역코드(시/군/구) : 넘겨준 areaCode(광역시/시 값) 기반으로 sigunguCode 받아오는 api url
+http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&areaCode=(***광역시/시 코드***)&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest
+ -->
