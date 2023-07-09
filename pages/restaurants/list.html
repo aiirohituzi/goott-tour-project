@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>음식점 정보 조회</title>
+    <title>음식점 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
@@ -147,47 +147,127 @@
   	 -->
     <!-- 
 		음식점 소분류 코드 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&cat1=A05&cat2=A0502&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest
+		http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&cat1=A05&cat2=A0502&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
   	지역코드(광역시/시) : areaCode 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest
+		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
 		지역코드(시/군/구) : 넘겨준 areaCode(광역시/시 값) 기반으로 sigunguCode 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&areaCode=(***광역시/시 코드***)&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest
+		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&areaCode=(***광역시/시 코드***)&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
 		-->
 
     <script>
+      // 앱 키
+      const apiKey =
+        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      // 메뉴를 출력할 element의 id 집합
+      const selectElementIds = {
+        area: "#area",
+        sigungu: "#sigungu",
+        cat3: "#cat3",
+      };
+      // 선택된 메뉴값, default : '' (전체)
+      const selectedMenus = {
+        area: "",
+        sigungu: "",
+        cat3: "",
+      };
+      // 페이지네이션에 필요한 값
       let pageNo = 1;
       let numOfRows = 12;
       let totalCount = 0;
-      let selectedCategory = ""; // default : 전체
+      // 각 기능별 호출 api의 url 집합
+      const urls = {
+        list: function (areaCode, sigunguCode, cat3Code) {
+          return `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A05&cat2=A0502&cat3=${cat3Code}&_type=json`;
+        },
+        area: `http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=${apiKey}&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
+        sigungu: function (areaCode) {
+          return `http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=${apiKey}&areaCode=${areaCode}&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+        },
+        cat3: `http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=${apiKey}&cat1=A05&cat2=A0502&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
+      };
+
       $(function () {
         $(".loading-indicator").hide();
+        $(selectElementIds.sigungu).parent().hide();
 
-        getRestaurantsList(pageNo, selectedCategory);
+        // api 요청
+        getRestaurantsList(pageNo);
+        getMenuCode(urls.area, selectElementIds.area);
+        getMenuCode(urls.cat3, selectElementIds.cat3);
 
+        // 이벤트 리스너 추가
         // $(".more").click(function () {
         //   $(this).remove();
         //   pageNo++;
-        //   getRestaurantsList(pageNo, selectedCategory);
+        //   getRestaurantsList(pageNo);
         // });
-        $("#cat3").change(function () {
-          selectedCategory = $(this).val();
+        $(selectElementIds.area)
+          .children()
+          .change(function () {
+            selectedMenus.area = $(this).val();
+            console.log("광역시/시 코드 선택 : " + selectedMenus.area);
+            if (selectedMenus.area != "") {
+              getMenuCode(
+                urls.sigungu(selectedMenus.area),
+                selectElementIds.sigungu
+              );
+              $(selectElementIds.sigungu).parent().show();
+            } else {
+              $(selectElementIds.sigungu).parent().hide();
+              $(selectElementIds.sigungu).html("");
+              selectedMenus.sigungu = "";
+            }
+          });
+        $(selectElementIds.sigungu).on("DOMNodeInserted", function () {
+          console.log("시군구 div DOM 변경");
+          $(selectElementIds.sigungu)
+            .children()
+            .change(function () {
+              selectedMenus.sigungu = $(this).val();
+              console.log("시/군/구 코드 선택 : " + selectedMenus.sigungu);
+            });
         });
+        $(selectElementIds.cat3)
+          .children()
+          .change(function () {
+            selectedMenus.cat3 = $(this).val();
+            console.log("소분류 코드 선택 : " + selectedMenus.cat3);
+          });
         $("#search").click(function () {
-          $(".items").data("animateEffect", "fadeInLeft");
           $(".wrapper-restaurants-list").html("");
-          getRestaurantsList(pageNo, selectedCategory);
+          getRestaurantsList(pageNo);
         });
       });
 
-      function getRestaurantsList(pageNo, selectedCategory) {
-        console.log(pageNo, selectedCategory);
-        $(".loading-indicator").show();
+      /*
+        onload 동작 예상
+        1. 제일 먼저 기본값으로 설정된 지역코드, 카테고리코드로 리스트를 요청함
+        2. 파라메터들의 최상위 메뉴를 만들기 위해 areaCode의 광역시/도 코드와 cat3(소분류) 코드 목록을 요청함
+        3. 받은 데이터들로 선택 메뉴 두개와 목록이 완성됨
+        4. 광역시/도 메뉴에서 무언가 항목을 선택하면 그 하위 메뉴를 받아오기 위해 선택항목을 파라메터로 다시 시/군/구 코드를 요청함
+        5. 광역시/도 메뉴 옆에 받은 시/군/구 코드 목록을 기반으로 메뉴를 추가함
+        5-1. 만약 광역시/도에서 '전체'를 선택했다면 시/군/구 선택 메뉴를 화면에서 제거하고 내부적으로도 값을 초기화시켜야함
+        6. 검색버튼을 별도로 만들어 쿼리를 자주 요청하지 않도록 제한함
 
-        const apiKey =
-          "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
-        const url = `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=&sigunguCode=&cat1=A05&cat2=A0502&cat3=${selectedCategory}&_type=json`;
+        추가구현 : 페이지네이션
+      */
+
+      function getRestaurantsList(pageNo) {
+        $(".loading-indicator").show();
+        console.log(
+          urls.list(
+            selectedMenus.area,
+            selectedMenus.sigungu,
+            selectedMenus.cat3
+          )
+        );
+
         $.ajax({
-          url: url, // 데이터를 수신 받을 서버 주소
+          url: urls.list(
+            selectedMenus.area,
+            selectedMenus.sigungu,
+            selectedMenus.cat3
+          ), // 데이터를 수신 받을 서버 주소
           type: "get", // 통신방식(GET, POST, PUT, DELETE)
           dataType: "json", // 수신 받을 데이터 타입
           async: false,
@@ -210,82 +290,118 @@
           console.log(restaurantsArr);
 
           totalCount = restaurantsData.response.body.totalCount;
-          $.each(restaurantsArr, function (i, item) {
-            const contentId = item.contentid;
+          let output = "";
+          if (totalCount > 0) {
+            $.each(restaurantsArr, function (i, item) {
+              const contentId = item.contentid;
 
-            let output = `<div class="items col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">`;
-            output += `<div class="blog-entry">`;
-            output += `<a href="#" class="blog-img">`;
-            output += `<img src="${
-              item.firstimage != ""
-                ? item.firstimage
-                : item.firstimage2 != ""
-                ? item.firstimage2
-                : "../../images/noimage_restaurants.png"
-            }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
-            output += `<div class="desc">`;
-            output += `<h3><a href="#" title="${item.title}">${item.title}</a></h3>`;
-            output += `<p>${item.addr1}${
-              item.addr2 != "" ? " " + item.addr2 : ""
-            }</p>`;
-            output += `<span><small>등록일 : ${stringToDate(
-              item.createdtime
-            )}</small><br>`;
-            output += `<small>수정일 : ${stringToDate(
-              item.modifiedtime
-            )}</small></span>`;
-            output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
-            output += `</div>`;
-            output += `</div>`;
-            output += `</div>`;
-            $(".wrapper-restaurants-list").append(output);
-            $("#totalCount").html(
-              `총 ${totalCount}건의 정보가 조회되었습니다.`
+              output += `<div class="items col-lg-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">`;
+              output += `<div class="blog-entry">`;
+              output += `<a href="#" class="blog-img">`;
+              output += `<img src="${
+                item.firstimage != ""
+                  ? item.firstimage
+                  : item.firstimage2 != ""
+                  ? item.firstimage2
+                  : "../../images/noimage_restaurants.png"
+              }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
+              output += `<div class="desc">`;
+              output += `<h3><a href="#" title="${item.title}">${item.title}</a></h3>`;
+              output += `<p>${item.addr1}${
+                item.addr2 != "" ? " " + item.addr2 : ""
+              }</p>`;
+              output += `<span><small>등록일 : ${stringToDate(
+                item.createdtime
+              )}</small><br>`;
+              output += `<small>수정일 : ${stringToDate(
+                item.modifiedtime
+              )}</small></span>`;
+              output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
+              output += `</div>`;
+              output += `</div>`;
+              output += `</div>`;
+            });
+          }
+          $(".wrapper-restaurants-list").append(output);
+          $("#totalCount").html(`총 ${totalCount}건의 정보가 검색되었습니다.`);
+          contentWayPoint();
+
+          function contentWayPoint() {
+            var i = 0;
+            $(".animate-box").waypoint(
+              function (direction) {
+                if (
+                  direction === "down" &&
+                  !$(this.element).hasClass("animated")
+                ) {
+                  i++;
+
+                  $(this.element).addClass("item-animate");
+                  setTimeout(function () {
+                    $("body .animate-box.item-animate").each(function (k) {
+                      var el = $(this);
+                      setTimeout(
+                        function () {
+                          var effect = el.data("animate-effect");
+                          if (effect === "fadeIn") {
+                            el.addClass("fadeIn animated");
+                          } else if (effect === "fadeInLeft") {
+                            el.addClass("fadeInLeft animated");
+                          } else if (effect === "fadeInRight") {
+                            el.addClass("fadeInRight animated");
+                          } else {
+                            el.addClass("fadeInUp animated");
+                          }
+
+                          el.removeClass("item-animate");
+                        },
+                        k * 200,
+                        "easeInOutExpo"
+                      );
+                    });
+                  }, 100);
+                }
+              },
+              { offset: "85%" }
             );
-            contentWayPoint();
-
-            function contentWayPoint() {
-              var i = 0;
-              $(".animate-box").waypoint(
-                function (direction) {
-                  if (
-                    direction === "down" &&
-                    !$(this.element).hasClass("animated")
-                  ) {
-                    i++;
-
-                    $(this.element).addClass("item-animate");
-                    setTimeout(function () {
-                      $("body .animate-box.item-animate").each(function (k) {
-                        var el = $(this);
-                        setTimeout(
-                          function () {
-                            var effect = el.data("animate-effect");
-                            if (effect === "fadeIn") {
-                              el.addClass("fadeIn animated");
-                            } else if (effect === "fadeInLeft") {
-                              el.addClass("fadeInLeft animated");
-                            } else if (effect === "fadeInRight") {
-                              el.addClass("fadeInRight animated");
-                            } else {
-                              el.addClass("fadeInUp animated");
-                            }
-
-                            el.removeClass("item-animate");
-                          },
-                          k * 200,
-                          "easeInOutExpo"
-                        );
-                      });
-                    }, 100);
-                  }
-                },
-                { offset: "85%" }
-              );
-            }
-          });
+          }
         }
       }
+
+      function getMenuCode(url, eid) {
+        $(".loading-indicator").show();
+        console.log(url);
+        $.ajax({
+          url: url, // 데이터를 수신 받을 서버 주소
+          type: "get", // 통신방식(GET, POST, PUT, DELETE)
+          dataType: "json", // 수신 받을 데이터 타입
+          async: false,
+          success: function (data) {
+            // 통신이 성공했을 때 호출되는 콜백함수
+            console.log(data);
+            drawSelect(data, eid);
+          },
+          err: function () {
+            // 통신이 실패(부정적인 response) 했을 때 호출되는 콜백함수
+          },
+          complete: function () {
+            // 통신이 완료되었을 때 호출 되는 콜백함수
+            $(".loading-indicator").hide();
+          },
+        });
+      }
+
+      function drawSelect(data, eid) {
+        let output = `<select>`;
+        output += `<option value="">전체</option>`;
+        $.each(data.response.body.items.item, function (i, item) {
+          output += `<option value="${item.code}">${item.name}</option>`;
+        });
+        output += `</select>`;
+
+        $(eid).html(output);
+      }
+
       function stringToDate(str) {
         let year = str.substr(0, 4);
         let month = str.substr(4, 2);
@@ -352,45 +468,51 @@
             class="fh5co-heading animate-box"
             data-animate-effect="fadeInLeft"
           >
-            Read Our Blog
+            음식점
           </h2>
           <div
             class="wrapper-category animate-box"
             data-animate-effect="fadeInLeft"
           >
-            <select name="cat3" id="cat3">
-              <option value="">전체</option>
-              <option value="A05020100">한식</option>
-              <option value="A05020200">서양식</option>
-              <option value="A05020300">일식</option>
-              <option value="A05020400">중식</option>
-              <option value="A05020700">이색음식점</option>
-              <option value="A05020900">카페/전통찻집</option>
-              <option value="A05021000">클럽</option>
-            </select>
-            <a href="#" class="btn btn-primary" id="search">검색</a>
-            <span id="totalCount"></span>
-          </div>
-          <div
-            class="row row-bottom-padded-md wrapper-restaurants-list position-relative"
-          >
-            <div class="loading-indicator">
-              <img src="../../images/loading_restaurants.gif" />
+            <div>
+              <small>광역시/시</small>
+              <div id="area"></div>
             </div>
+            <div>
+              <small>시/군/구</small>
+              <div id="sigungu"></div>
+            </div>
+            <div>
+              <small>소분류</small>
+              <div id="cat3"></div>
+            </div>
+            <div>
+              <small>&nbsp;</small>
+              <a href="#" class="btn btn-primary" id="search">검색</a>
+            </div>
+            <div class="wrapper-total-count">
+              <small>&nbsp;</small>
+              <span id="totalCount"></span>
+            </div>
+          </div>
+          <div class="row row-bottom-padded-md wrapper-restaurants-list">
             <!-- <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-							<div class="blog-entry">
-								<a href="#" class="blog-img"><img src="../../images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
-								<div class="desc">
-									<h3><a href="#">Inspirational Website</a></h3>
-									<span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
-									<p>Design must be functional and functionality must be translated into visual aesthetics</p>
-									<a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
-								</div>
-							</div>
-						</div> -->
+              <div class="blog-entry">
+                <a href="#" class="blog-img"><img src="../../images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
+                <div class="desc">
+                  <h3><a href="#">Inspirational Website</a></h3>
+                  <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
+                  <p>Design must be functional and functionality must be translated into visual aesthetics</p>
+                  <a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                </div>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
+    </div>
+    <div class="loading-indicator">
+      <img src="../../images/loading_restaurants.gif" />
     </div>
   </body>
 </html>
