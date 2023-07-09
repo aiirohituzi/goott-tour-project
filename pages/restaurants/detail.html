@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="kr">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>음식점 정보</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+    <meta name="author" content="FreeHTML5.co" />
+
+    <!-- 
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE 
+	DESIGNED & DEVELOPED by FreeHTML5.co
+		
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	-->
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" />
+    <!-- Naver Web Font -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet" />
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="../../css/icomoon.css" />
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="../../css/flexslider.css" />
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="../../css/style.css" />
+    <!-- 이 파일의 style -->
+    <link rel="stylesheet" href="./restaurants.css" />
+
+    <!-- jQuery -->
+    <script src="../../js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="../../js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="../../js/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="../../js/jquery.flexslider-min.js"></script>
+
+    <!-- MAIN JS -->
+    <script src="../../js/main.js"></script>
+
+    <!-- Modernizr JS -->
+    <script src="../../js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+	<script src="js/respond.min.js"></s>
+	<![endif]-->
+
+    <!-- 
+    contentTypeId : 관광타입
+      39 : 음식점
+    areaCode : 광역시/도
+      1 : 서울
+      2 : 인천
+      3 : 대전
+      4 : 대구
+      5 : 광주
+      6 : 부산
+      7 : 울산
+      8 : 세종특별자치시
+      9 : 경기도
+      10 : 강원특별자치도
+      11 : 충청북도
+      12 : 충청남도
+      13 : 경상북도
+      14 : 경상남도
+      15 : 전라북도
+      16 : 전라남도
+      17 : 제주도
+    sigunguCode : 시/군/구
+      areaCode를 기준으로 하단에 표시된 api를 통해 얻어올 수 있음
+      1 : 서울 : 25개
+      2 : 인천 : 10개
+      3 : 대전 : 5개
+      4 : 대구 : 9개
+      5 : 광주 : 5개
+      6 : 부산 : 16개
+      7 : 울산 : 5개
+      8 : 세종특별자치시 : 1개
+      9 : 경기도 : 없음
+      10 : 강원특별자치도 : 없음
+      11 : 충청북도 : 없음
+      12 : 충청남도 : 없음
+      13 : 경상북도 : 없음
+      14 : 경상남도 : 없음
+      15 : 전라북도 : 없음
+      16 : 전라남도 : 없음
+      17 : 제주도 : 없음
+    cat1 : 대분류 코드
+      A05 : 음식
+    cat2 : 중분류 코드
+      A0502 : 음식점
+    cat3 : 소분류 코드
+      A05020100 : 한식
+      A05020200 : 서양식
+      A05020300 : 일식
+      A05020400 : 중식
+      A05020700 : 이색음식점
+      A05020900 : 카페/전통찻집
+      A05021000 : 클럽
+  	 -->
+    <!-- 
+      공통정보조회 url (기본정보)
+		  http://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json
+      소개정보조회 url (이용안내)
+      http://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=(***콘텐츠id***)&contentTypeId=39&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
+      반복정보조회 url (상세정보)
+      http://apis.data.go.kr/B551011/KorService1/detailInfo1?contentId=(***콘텐츠id***)&contentTypeId=39&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
+      반려동물여행정보조회 url (반려동물정보)
+      http://apis.data.go.kr/B551011/KorService1/detailPetTour1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
+      이미지조회 url (슬라이더용)
+      http://apis.data.go.kr/B551011/KorService1/detailImage1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&imageYN=Y&subImageYN=Y&_type=json
+
+
+      기본정보 ex
+      https://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=2901530&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y
+      이용안내 ex
+      https://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=2901530&contentTypeId=39&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
+      상세정보 ex
+      https://apis.data.go.kr/B551011/KorService1/detailInfo1?contentId=2752202&contentTypeId=39&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
+      반려동물 ex
+      http://apis.data.go.kr/B551011/KorService1/detailPetTour1?contentId=2911323&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
+      이미지 ex
+      http://apis.data.go.kr/B551011/KorService1/detailImage1?contentId=2901530&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest&imageYN=Y&subImageYN=Y
+		-->
+
+    <script>
+      // 앱 키
+      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      // 데이터를 출력할 element의 id 집합
+      const outputElementIds = {
+        common: "#detailCommon",
+        intro: "#detailIntro",
+        info: "#detailInfo",
+        petTour: "#detailPetTour",
+        image: "#detailImage",
+      };
+      // 각 기능별 호출 api의 url 집합
+      const urls = {
+        common: function (contentId) {
+          return `http://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=${contentId}&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json`;
+        },
+        intro: function (contentId) {
+          return `http://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=${contentId}&contentTypeId=39&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+        },
+        info: function (contentId) {
+          return `http://apis.data.go.kr/B551011/KorService1/detailInfo1?contentId=${contentId}&contentTypeId=39&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+        },
+        petTour: function (contentId) {
+          return `http://apis.data.go.kr/B551011/KorService1/detailPetTour1?contentId=${contentId}&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+        },
+        image: function (contentId) {
+          return `http://apis.data.go.kr/B551011/KorService1/detailImage1?contentId=${contentId}&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&imageYN=Y&subImageYN=Y&_type=json`;
+        },
+      };
+
+      $(function () {
+        $(".loading-indicator").hide();
+
+        // queryString 에서 contentId 받아오기
+        let contentId = "";
+        $(function () {
+          if (getParameter("contentId") == null || getParameter("contentId") == -1) {
+            // TODO: contentId 없을 시 동작 처리
+            location.href = "areaList.html";
+          } else {
+            contentId = getParameter("contentId");
+            // api 요청
+            getRestaurantDetail("common", contentId);
+            getRestaurantDetail("intro", contentId);
+            getRestaurantDetail("info", contentId);
+            getRestaurantDetail("petTour", contentId);
+            getRestaurantDetail("image", contentId);
+          }
+        });
+
+        // 이벤트 리스너 추가
+      });
+
+      /*
+        onload 동작 예상
+        1. contentId를 queryString으로부터 받아옴
+        2. 공통정보조회, 소개정보조회, 반복정보조회, 반려동물여행정보조회, 이미지조회 api 를 통해 총 5개의 response를 받아옴
+        2-1. 반복정보, 반려동물여행정보, 이미지는 컨텐츠에 따라 있을 수도 없을 수도 있음 그에 따른 dom의 형태를 동적으로 표현해야함
+        3. 받은 데이터들을 취합하여 상세보기 화면을 만들어 출력함
+        예외. contentId에 대한 정보가 조회되지 않을 경우 잘못된 경로라는 안내 메시지와 함께 목록 페이지로 돌려보냄 (timeout을 이용하여 메시지도 확인하고 몇 초 뒤에 이동될 것인지 안내함)
+
+        추가구현 : 페이지네이션
+      */
+
+      function getRestaurantDetail(apiType, contentId) {
+        $(".loading-indicator").show();
+        console.log(urls[apiType](contentId));
+
+        $.ajax({
+          url: urls[apiType](contentId), // 데이터를 수신 받을 서버 주소
+          type: "get", // 통신방식(GET, POST, PUT, DELETE)
+          dataType: "json", // 수신 받을 데이터 타입
+          async: false,
+          success: function (data) {
+            // 통신이 성공했을 때 호출되는 콜백함수
+            console.log(data);
+            parsingData(data, apiType);
+          },
+          err: function () {
+            // 통신이 실패(부정적인 response) 했을 때 호출되는 콜백함수
+          },
+          complete: function () {
+            // 통신이 완료되었을 때 호출 되는 콜백함수
+            $(".loading-indicator").hide();
+          },
+        });
+
+        function parsingData(data, apiType) {
+          const itemArr = data.response.body.items.item;
+
+          const totalCount = data.response.body.totalCount;
+          let output = "";
+          if (totalCount > 0) {
+            $.each(itemArr, function (i, item) {
+              switch (apiType) {
+                case "common":
+                  output += isNotEmpty(item.title) ? `<div>제목 : ${item.title}</div>` : "";
+                  output += isNotEmpty(item.overview) ? `<div>개요 : ${item.overview}</div>` : "";
+                  output += isNotEmpty(item.createdtime) ? `<div>등록일 : ${stringToDate(item.createdtime)}</div>` : "";
+                  output += isNotEmpty(item.modifiedtime) ? `<div>수정일 : ${stringToDate(item.modifiedtime)}</div>` : "";
+                  output += isNotEmpty(item.telname) ? `<div>전화번호명 : ${item.telname}</div>` : "";
+                  output += isNotEmpty(item.tel) ? `<div>전화번호 : ${item.tel}</div>` : "";
+                  output += isNotEmpty(item.homepage) ? `<div>홈페이지 : ${item.homepage}</div>` : "";
+                  output += isNotEmpty(item.addr1) ? `<div>주소 : ${item.addr1}${isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""}</div>` : "";
+                  output += isNotEmpty(item.zipcode) ? `<div>우편번호 : ${item.zipcode}</div>` : "";
+                  break;
+                case "intro":
+                  output += isNotEmpty(item.seat) ? `<div>좌석수 : ${item.seat}</div>` : "";
+                  output += isNotEmpty(item.kidsfacility) ? `<div>어린이 놀이방 여부 : ${item.kidsfacility}</div>` : "";
+                  output += isNotEmpty(item.firstmenu) ? `<div>대표 메뉴 : ${item.firstmenu}</div>` : "";
+                  output += isNotEmpty(item.treatmenu) ? `<div>취급 메뉴 : ${item.treatmenu}</div>` : "";
+                  output += isNotEmpty(item.smoking) ? `<div>금연/흡연 여부 : ${item.smoking}</div>` : "";
+                  output += isNotEmpty(item.packing) ? `<div>포장 가능 : ${item.packing}</div>` : "";
+                  output += isNotEmpty(item.infocenterfood) ? `<div>문의 및 안내 : ${item.infocenterfood}</div>` : "";
+                  output += isNotEmpty(item.scalefood) ? `<div>규모 : ${item.scalefood}</div>` : "";
+                  output += isNotEmpty(item.parkingfood) ? `<div>주차 시설 : ${item.parkingfood}</div>` : "";
+                  output += isNotEmpty(item.opendatefood) ? `<div>개업일 : ${item.opendatefood}</div>` : "";
+                  output += isNotEmpty(item.opentimefood) ? `<div>영업시간 : ${item.opentimefood}</div>` : "";
+                  output += isNotEmpty(item.restdatefood) ? `<div>쉬는 날 : ${item.restdatefood}</div>` : "";
+                  output += isNotEmpty(item.discountinfofood) ? `<div>할인 정보 : ${item.discountinfofood}</div>` : "";
+                  output += isNotEmpty(item.chkcreditcardfood) ? `<div>신용카드 가능 정보 : ${item.chkcreditcardfood}</div>` : "";
+                  output += isNotEmpty(item.reservationfood) ? `<div>예약 안내 : ${item.reservationfood}</div>` : "";
+                  output += isNotEmpty(item.lcnsno) ? `<div>인허가 번호 : ${item.lcnsno}</div>` : "";
+                  break;
+                case "info":
+                  output += isNotEmpty(item.infoname) ? `<div>제목 : ${item.infoname}<div>` : "";
+                  output += isNotEmpty(item.infotext) ? `<div>내용 : ${item.infotext}<div>` : "";
+                  break;
+                case "petTour":
+                  output += isNotEmpty(item.relaAcdntRiskMtr) ? `<div>관련 사고 대비 사항 : ${item.relaAcdntRiskMtr}</div>` : "";
+                  output += isNotEmpty(item.acmpyTypeCd) ? `<div>동반 유형 코드(동반 구분) : ${item.acmpyTypeCd}</div>` : "";
+                  output += isNotEmpty(item.relaPosesFclty) ? `<div>관련 구비 시설 : ${item.relaPosesFclty}</div>` : "";
+                  output += isNotEmpty(item.relaFrnshPrdlst) ? `<div>관련 비치 품목 : ${item.relaFrnshPrdlst}</div>` : "";
+                  output += isNotEmpty(item.etcAcmpyInfo) ? `<div>기타 동반 정보 : ${item.etcAcmpyInfo}</div>` : "";
+                  output += isNotEmpty(item.relaPurcPrdlst) ? `<div>관련 구매 품목 : ${item.relaPurcPrdlst}</div>` : "";
+                  output += isNotEmpty(item.acmpyPsblCpam) ? `<div>동반 가능 동물 조건 : ${item.acmpyPsblCpam}</div>` : "";
+                  output += isNotEmpty(item.relaRntlPrdlst) ? `<div>관련 렌탈 품목 : ${item.relaRntlPrdlst}</div>` : "";
+                  output += isNotEmpty(item.acmpyNeedMtr) ? `<div>동반 시 필요 사항 : ${item.acmpyNeedMtr}</div>` : "";
+                  break;
+                case "image":
+                  output += isNotEmpty(item.originimgurl) ? `<div>원본<img src="${item.originimgurl}" /></div>` : "";
+                  output += isNotEmpty(item.smallimageurl) ? `<div>썸네일<img src="${item.smallimageurl}" /></div>` : "";
+              }
+            });
+          }
+
+          $(outputElementIds[apiType]).html(output);
+
+          contentWayPoint();
+
+          function isNotEmpty(value) {
+            return value != "" ? true : false;
+          }
+
+          function contentWayPoint() {
+            var i = 0;
+            $(".animate-box").waypoint(
+              function (direction) {
+                if (direction === "down" && !$(this.element).hasClass("animated")) {
+                  i++;
+
+                  $(this.element).addClass("item-animate");
+                  setTimeout(function () {
+                    $("body .animate-box.item-animate").each(function (k) {
+                      var el = $(this);
+                      setTimeout(
+                        function () {
+                          var effect = el.data("animate-effect");
+                          if (effect === "fadeIn") {
+                            el.addClass("fadeIn animated");
+                          } else if (effect === "fadeInLeft") {
+                            el.addClass("fadeInLeft animated");
+                          } else if (effect === "fadeInRight") {
+                            el.addClass("fadeInRight animated");
+                          } else {
+                            el.addClass("fadeInUp animated");
+                          }
+
+                          el.removeClass("item-animate");
+                        },
+                        k * 200,
+                        "easeInOutExpo"
+                      );
+                    });
+                  }, 100);
+                }
+              },
+              { offset: "85%" }
+            );
+          }
+        }
+      }
+
+      function stringToDate(str) {
+        let year = str.substr(0, 4);
+        let month = str.substr(4, 2);
+        let date = str.substr(6, 2);
+        let hour = str.substr(8, 2);
+        let minute = str.substr(10, 2);
+        let second = str.substr(12, 2);
+        // console.log(year, month, date, hour, minute, second)
+        return `${year}년 ${month}월 ${date}일 ${hour}:${minute}:${second}`;
+      }
+
+      function getParameter(paramName) {
+        let returnVal = -1;
+        let url = location.href;
+        if (url.indexOf("?") !== -1) {
+          // 쿼리스트링이 있다면
+          let queryStr = url.split("?")[1];
+          let tmpArr = queryStr.split("&");
+
+          for (let tmp of tmpArr) {
+            if (tmp.split("=")[0] === paramName) {
+              // 내가 찾는 파라메터라면
+              returnVal = tmp.split("=")[1];
+              break; // 유지보수를 생각하면 입구도 하나 출구도 하나인것이 가장 이상적이다. 중간에 return을 해버리면 추후 수정 시 온갖곳에 존재하는 return을 모두 찾아보고 수정해야한다.
+            }
+          }
+        }
+        return returnVal;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="fh5co-page">
+      <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+      <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
+        <h1 id="fh5co-logo"><a href="../../index.html">Goott Tour</a></h1>
+        <nav id="fh5co-main-menu" role="navigation">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="fh5co-active"><a href="list.html">Restaurants</a></li>
+            <li><a href="#">Noname</a></li>
+            <li><a href="#">Noname</a></li>
+            <li><a href="#">Noname</a></li>
+          </ul>
+        </nav>
+
+        <div class="fh5co-footer">
+          <p>
+            <small
+              ><span>&copy; 2016 Blend Free HTML5. All Rights Reserved.</span>
+              <span
+                >Designed by
+                <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a>
+              </span>
+              <span>Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></span></small
+            >
+          </p>
+          <ul>
+            <li>
+              <a href="#"><i class="icon-facebook2"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="icon-twitter2"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="icon-instagram"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="icon-linkedin2"></i></a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div id="fh5co-main">
+        <div class="fh5co-narrow-content">
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
+
+          <div class="row row-bottom-padded-md wrapper-restaurants-detail">
+            <div id="detailImage"></div>
+            <div id="detailCommon"></div>
+            <div id="detailIntro"></div>
+            <div id="detailInfo"></div>
+            <div id="detailPetTour"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="loading-indicator">
+      <img src="../../images/loading_restaurants.gif" />
+    </div>
+  </body>
+</html>

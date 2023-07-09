@@ -59,6 +59,11 @@
   }
 }
 
+.wrapper-restaurants-detail > div {
+  border: 1px solid #f00;
+  margin-bottom: 20px;
+}
+
 .loading-indicator {
   position: fixed;
   top: 0;
