@@ -40,7 +40,7 @@
     <meta name="twitter:card" content="" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico" />
+    <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" />
     <!-- Naver Web Font -->
@@ -191,12 +191,18 @@
       $(function () {
         $(".loading-indicator").hide();
 
+        $(".flexslider").flexslider({
+          animation: "fade",
+          slideshowSpeed: 3000,
+          directionNav: true,
+        });
+
         // queryString 에서 contentId 받아오기
         let contentId = "";
         $(function () {
           if (getParameter("contentId") == null || getParameter("contentId") == -1) {
             // TODO: contentId 없을 시 동작 처리
-            location.href = "areaList.html";
+            // location.href = "areaList.html";
           } else {
             contentId = getParameter("contentId");
             // api 요청
@@ -209,6 +215,13 @@
         });
 
         // 이벤트 리스너 추가
+        $(outputElementIds.image).on("DOMNodeInserted", function () {
+          $(".flexslider").flexslider({
+            animation: "fade",
+            slideshowSpeed: 3000,
+            directionNav: true,
+          });
+        });
       });
 
       /*
@@ -250,58 +263,89 @@
 
           const totalCount = data.response.body.totalCount;
           let output = "";
+          if (apiType == "image") {
+            output += `<ul class="slides">`;
+          }
           if (totalCount > 0) {
+            if (apiType == "info") {
+              output += `<div class="detail-content-wrapper detail-content-flex">`;
+            }
             $.each(itemArr, function (i, item) {
               switch (apiType) {
                 case "common":
-                  output += isNotEmpty(item.title) ? `<div>제목 : ${item.title}</div>` : "";
-                  output += isNotEmpty(item.overview) ? `<div>개요 : ${item.overview}</div>` : "";
-                  output += isNotEmpty(item.createdtime) ? `<div>등록일 : ${stringToDate(item.createdtime)}</div>` : "";
-                  output += isNotEmpty(item.modifiedtime) ? `<div>수정일 : ${stringToDate(item.modifiedtime)}</div>` : "";
-                  output += isNotEmpty(item.telname) ? `<div>전화번호명 : ${item.telname}</div>` : "";
-                  output += isNotEmpty(item.tel) ? `<div>전화번호 : ${item.tel}</div>` : "";
-                  output += isNotEmpty(item.homepage) ? `<div>홈페이지 : ${item.homepage}</div>` : "";
-                  output += isNotEmpty(item.addr1) ? `<div>주소 : ${item.addr1}${isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""}</div>` : "";
-                  output += isNotEmpty(item.zipcode) ? `<div>우편번호 : ${item.zipcode}</div>` : "";
+                  output += `<div class="detail-content-wrapper">`;
+                  output += `<div class="detail-title">`;
+                  output += `<h3 class="fh5co-heading">${item.title}</h3>`;
+                  output += `<div>`;
+                  output += `${isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""}`;
+                  output += `${isNotEmpty(item.modifiedtime) ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>" : ""}`;
+                  output += `</div>`;
+                  output += `</div>`;
+                  output += isNotEmpty(item.overview) ? `<div>${item.overview}</div>` : "";
+                  output += `<div class="detail-content-flex">`;
+                  output += isNotEmpty(item.addr1)
+                    ? `<div><h5>주소</h5><span>${item.addr1}${isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.zipcode) ? `<div><h5>우편번호</h5><span>${item.zipcode}</span></div>` : "";
+                  // output += isNotEmpty(item.telname) ? `<div><h5>전화번호명</h5><span>${item.telname}</span></div>` : "";
+                  output += isNotEmpty(item.tel) ? `<div><h5>전화번호</h5><span>${item.tel}</span></div>` : "";
+                  output += isNotEmpty(item.homepage) ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>` : "";
+                  output += `</div>`;
+                  output += `</div>`;
                   break;
                 case "intro":
-                  output += isNotEmpty(item.seat) ? `<div>좌석수 : ${item.seat}</div>` : "";
-                  output += isNotEmpty(item.kidsfacility) ? `<div>어린이 놀이방 여부 : ${item.kidsfacility}</div>` : "";
-                  output += isNotEmpty(item.firstmenu) ? `<div>대표 메뉴 : ${item.firstmenu}</div>` : "";
-                  output += isNotEmpty(item.treatmenu) ? `<div>취급 메뉴 : ${item.treatmenu}</div>` : "";
-                  output += isNotEmpty(item.smoking) ? `<div>금연/흡연 여부 : ${item.smoking}</div>` : "";
-                  output += isNotEmpty(item.packing) ? `<div>포장 가능 : ${item.packing}</div>` : "";
-                  output += isNotEmpty(item.infocenterfood) ? `<div>문의 및 안내 : ${item.infocenterfood}</div>` : "";
-                  output += isNotEmpty(item.scalefood) ? `<div>규모 : ${item.scalefood}</div>` : "";
-                  output += isNotEmpty(item.parkingfood) ? `<div>주차 시설 : ${item.parkingfood}</div>` : "";
-                  output += isNotEmpty(item.opendatefood) ? `<div>개업일 : ${item.opendatefood}</div>` : "";
-                  output += isNotEmpty(item.opentimefood) ? `<div>영업시간 : ${item.opentimefood}</div>` : "";
-                  output += isNotEmpty(item.restdatefood) ? `<div>쉬는 날 : ${item.restdatefood}</div>` : "";
-                  output += isNotEmpty(item.discountinfofood) ? `<div>할인 정보 : ${item.discountinfofood}</div>` : "";
-                  output += isNotEmpty(item.chkcreditcardfood) ? `<div>신용카드 가능 정보 : ${item.chkcreditcardfood}</div>` : "";
-                  output += isNotEmpty(item.reservationfood) ? `<div>예약 안내 : ${item.reservationfood}</div>` : "";
-                  output += isNotEmpty(item.lcnsno) ? `<div>인허가 번호 : ${item.lcnsno}</div>` : "";
+                  output += `<div class="detail-content-wrapper detail-content-flex">`;
+                  output += isNotEmpty(item.firstmenu) ? `<div><h5>대표 메뉴</h5><span>${item.firstmenu}</span></div>` : "";
+                  output += isNotEmpty(item.treatmenu) ? `<div><h5>취급 메뉴</h5><span>${item.treatmenu}</span></div>` : "";
+                  output += isNotEmpty(item.opentimefood) ? `<div><h5>영업시간</h5><span>${item.opentimefood}</span></div>` : "";
+                  output += isNotEmpty(item.restdatefood) ? `<div><h5>쉬는 날</h5><span>${item.restdatefood}</span></div>` : "";
+                  output += isNotEmpty(item.parkingfood) ? `<div><h5>주차 시설</h5><span>${item.parkingfood}</span></div>` : "";
+                  output += isNotEmpty(item.reservationfood) ? `<div><h5>예약 안내</h5><span>${item.reservationfood}</span></div>` : "";
+                  output += isNotEmpty(item.discountinfofood) ? `<div><h5>할인 정보</h5><span>${item.discountinfofood}</span></div>` : "";
+                  output += isNotEmpty(item.packing) ? `<div><h5>포장 가능</h5><span>${item.packing}</span></div>` : "";
+                  output += isNotEmpty(item.chkcreditcardfood) ? `<div><h5>신용카드 가능 정보</h5><span>${item.chkcreditcardfood}</span></div>` : "";
+                  output += isNotEmpty(item.kidsfacility) ? `<div><h5>어린이 놀이방 여부</h5><span>${item.kidsfacility}</span></div>` : "";
+                  output += isNotEmpty(item.smoking) ? `<div><h5>금연/흡연 여부</h5><span>${item.smoking}</span></div>` : "";
+                  output += isNotEmpty(item.seat) ? `<div><h5>좌석수</h5><span>${item.seat}</span></div>` : "";
+                  output += isNotEmpty(item.scalefood) ? `<div><h5>규모</h5><span>${item.scalefood}</span></div>` : "";
+                  output += isNotEmpty(item.opendatefood) ? `<div><h5>개업일</h5><span>${item.opendatefood}</span></div>` : "";
+                  output += isNotEmpty(item.infocenterfood) ? `<div><h5>문의 및 안내</h5><span>${item.infocenterfood}</span></div>` : "";
+                  // output += isNotEmpty(item.lcnsno) ? `<div><h5>인허가 번호</h5><span>${item.lcnsno}</span></div>` : "";
+                  output += `</div>`;
                   break;
                 case "info":
-                  output += isNotEmpty(item.infoname) ? `<div>제목 : ${item.infoname}<div>` : "";
-                  output += isNotEmpty(item.infotext) ? `<div>내용 : ${item.infotext}<div>` : "";
+                  output += `<div>`;
+                  output += isNotEmpty(item.infoname) ? `<h5>${item.infoname}</h5>` : "";
+                  output += isNotEmpty(item.infotext) ? `<span>${item.infotext}</span>` : "";
+                  output += `</div>`;
                   break;
                 case "petTour":
-                  output += isNotEmpty(item.relaAcdntRiskMtr) ? `<div>관련 사고 대비 사항 : ${item.relaAcdntRiskMtr}</div>` : "";
-                  output += isNotEmpty(item.acmpyTypeCd) ? `<div>동반 유형 코드(동반 구분) : ${item.acmpyTypeCd}</div>` : "";
-                  output += isNotEmpty(item.relaPosesFclty) ? `<div>관련 구비 시설 : ${item.relaPosesFclty}</div>` : "";
-                  output += isNotEmpty(item.relaFrnshPrdlst) ? `<div>관련 비치 품목 : ${item.relaFrnshPrdlst}</div>` : "";
-                  output += isNotEmpty(item.etcAcmpyInfo) ? `<div>기타 동반 정보 : ${item.etcAcmpyInfo}</div>` : "";
-                  output += isNotEmpty(item.relaPurcPrdlst) ? `<div>관련 구매 품목 : ${item.relaPurcPrdlst}</div>` : "";
-                  output += isNotEmpty(item.acmpyPsblCpam) ? `<div>동반 가능 동물 조건 : ${item.acmpyPsblCpam}</div>` : "";
-                  output += isNotEmpty(item.relaRntlPrdlst) ? `<div>관련 렌탈 품목 : ${item.relaRntlPrdlst}</div>` : "";
-                  output += isNotEmpty(item.acmpyNeedMtr) ? `<div>동반 시 필요 사항 : ${item.acmpyNeedMtr}</div>` : "";
+                  output += `<div class="detail-content-wrapper detail-content-flex">`;
+                  output += isNotEmpty(item.acmpyTypeCd) ? `<div><h5>동반 가능 여부</h5><span>${item.acmpyTypeCd}</span></div>` : "";
+                  output += isNotEmpty(item.acmpyPsblCpam) ? `<div><h5>동반 가능 동물 조건</h5><span>${item.acmpyPsblCpam}</span></div>` : "";
+                  output += isNotEmpty(item.relaPosesFclty) ? `<div><h5>관련 구비 시설</h5><span>${item.relaPosesFclty}</span></div>` : "";
+                  output += isNotEmpty(item.relaFrnshPrdlst) ? `<div><h5>관련 비치 품목</h5><span>${item.relaFrnshPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.relaPurcPrdlst) ? `<div><h5>관련 구매 품목</h5><span>${item.relaPurcPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.relaRntlPrdlst) ? `<div><h5>관련 렌탈 품목</h5><span>${item.relaRntlPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.acmpyNeedMtr) ? `<div><h5>동반 시 필요 사항</h5><span>${item.acmpyNeedMtr}</span></div>` : "";
+                  output += isNotEmpty(item.relaAcdntRiskMtr) ? `<div><h5>관련 사고 대비 사항</h5><span>${item.relaAcdntRiskMtr}</span></div>` : "";
+                  output += isNotEmpty(item.etcAcmpyInfo) ? `<div><h5>기타 동반 정보</h5><span>${item.etcAcmpyInfo}</span></div>` : "";
+                  output += `</div>`;
                   break;
                 case "image":
-                  output += isNotEmpty(item.originimgurl) ? `<div>원본<img src="${item.originimgurl}" /></div>` : "";
-                  output += isNotEmpty(item.smallimageurl) ? `<div>썸네일<img src="${item.smallimageurl}" /></div>` : "";
+                  output += isNotEmpty(item.originimgurl) ? `<li style="background-image: url(${item.originimgurl})"><div class="overlay"></div></li>` : "";
+                // output += isNotEmpty(item.smallimageurl) ? `<div>썸네일<img src="${item.smallimageurl}" /></div>` : "";
               }
             });
+            if (apiType == "info") {
+              output += `</div>`;
+            }
+          }
+          if (apiType == "image") {
+            if (totalCount == 0) {
+              output += `<li style="background-image: url(../../images/noimage_restaurants.png)"><div class="overlay"></div></li>`;
+            }
+            output += `</ul>`;
           }
 
           $(outputElementIds[apiType]).html(output);
@@ -430,11 +474,110 @@
           <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
 
           <div class="row row-bottom-padded-md wrapper-restaurants-detail">
-            <div id="detailImage"></div>
-            <div id="detailCommon"></div>
-            <div id="detailIntro"></div>
-            <div id="detailInfo"></div>
-            <div id="detailPetTour"></div>
+            <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>
+            <div id="detailCommon" class="animate-box" data-animate-effect="fadeInLeft"></div>
+            <div id="detailIntro" class="animate-box" data-animate-effect="fadeInLeft"></div>
+            <div id="detailInfo" class="animate-box" data-animate-effect="fadeInLeft"></div>
+            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div>
+
+            <!-- ┌- 목업 데이터 -->
+            <!-- <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft">
+              <ul class="slides">
+                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/26/2866226_image2_1.jpg)">
+                  <div class="overlay"></div>
+                </li>
+                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/27/2866227_image2_1.jpg)"><div class="overlay"></div></li>
+                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/28/2866228_image2_1.jpg)"><div class="overlay"></div></li>
+                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/29/2866229_image2_1.jpg)"><div class="overlay"></div></li>
+              </ul>
+            </div>
+            <div id="detailCommon" class="animate-box" data-animate-effect="fadeInLeft">
+              <div class="detail-content-wrapper">
+                <div class="detail-title">
+                  <h3 class="fh5co-heading">제목 : 고모역쭈꾸미</h3>
+                  <div>
+                    <small>등록일 : 2022년 10월 12일 13:49:44</small>
+                    <small>수정일 : 2022년 10월 12일 13:49:58</small>
+                  </div>
+                </div>
+                <div>
+                  고모역쭈꾸미는 대구광역시 수성구 고모동에 있다. 깔끔한 외관과 예스러운 분위기를 연출하는 인테리어가 눈에 띈다. 내부에는 단체석이 마련되어 있어
+                  각종 모임을 하기 좋다. 대표 메뉴는 매콤한 맛이 일품인 쭈꾸미다. 차돌박이나 버섯을 추가해 넣어 먹으면 별미다. 평일 오전 11시 30분부터 오후
+                  2시까지 주문할 수 있는 돌솥 쭈꾸미 정식도 많은 사람이 찾는다. 이 밖에 차돌버섯된장찌개, 계란찜 등도 준비되어 있다. 동대구IC에서 가깝고, 주변에
+                  수성패밀리파크와 국립대구기상과학관이 있다.
+                </div>
+                <div class="detail-content-flex">
+                  <div>
+                    <h5>주소</h5>
+                    <span>대구광역시 수성구 고모로 188</span>
+                  </div>
+                  <div>
+                    <h5>우편번호</h5>
+                    <span>42260</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="detailIntro" class="animate-box" data-animate-effect="fadeInLeft">
+              <div class="detail-content-wrapper detail-content-flex">
+                <div>
+                  <h5>대표 메뉴</h5>
+                  <span>쭈꾸미</span>
+                </div>
+                <div>
+                  <h5>취급 메뉴</h5>
+                  <span>돌솥 쭈꾸미 정식, 차돌버섯된장찌개, 계란찜 등</span>
+                </div>
+                <div>
+                  <h5>영업시간</h5>
+                  <span>11:30~22:00, 브레이크 타임 15:00~17:00</span>
+                </div>
+                <div>
+                  <h5>쉬는 날</h5>
+                  <span>월요일</span>
+                </div>
+                <div>
+                  <h5>주차 시설</h5>
+                  <span>있음/주차요금 없음</span>
+                </div>
+                <div>
+                  <h5>포장 가능</h5>
+                  <span>가능</span>
+                </div>
+                <div>
+                  <h5>어린이 놀이방 여부</h5>
+                  <span>0</span>
+                </div>
+                <div>
+                  <h5>신용카드 가능 정보</h5>
+                  <span>가능</span>
+                </div>
+                <div>
+                  <h5>문의 및 안내</h5>
+                  <span>053-793-0204</span>
+                </div>
+                <div>
+                  <h5>인허가 번호</h5>
+                  <span>20150174887</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="detailInfo" class="animate-box" data-animate-effect="fadeInLeft">
+              <div class="detail-content-wrapper detail-content-flex">
+                <div>
+                  <h5>제목</h5>
+                  <span>화장실</span>
+                </div>
+                <div>
+                  <h5>내용</h5>
+                  <span>남녀 구분</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div> -->
+            <!-- └- 목업 데이터 -->
           </div>
         </div>
       </div>

@@ -59,9 +59,41 @@
   }
 }
 
-.wrapper-restaurants-detail > div {
-  border: 1px solid #f00;
+.wrapper-restaurants-detail {
+  padding: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper {
+  padding: 20px;
+  box-shadow: 2px 2px 6px #aaa;
+  border-radius: 4px;
   margin-bottom: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper > div {
+  margin-bottom: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper > div:last-child {
+  margin-bottom: 0;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title > div {
+  display: flex;
+  flex-direction: column;
+}
+.wrapper-restaurants-detail .detail-content-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.wrapper-restaurants-detail .detail-content-flex > div {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 5px;
+}
+.wrapper-restaurants-detail .detail-content-flex h5 {
+  margin: 0;
 }
 
 .loading-indicator {
@@ -80,4 +112,79 @@
   transform: translate(-50%, -50%);
   width: 70px;
   z-index: 1000;
+}
+
+.flexslider {
+  border: none;
+  z-index: 1;
+  width: 650px;
+  margin: auto;
+  padding: 5px;
+  box-shadow: 2px 2px 6px #aaa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.flexslider .slides {
+  position: relative;
+  overflow: hidden;
+}
+.flexslider .slides .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "";
+  /* background: rgba(0, 0, 0, 0.3); */
+  border-radius: 4px;
+}
+.flexslider .slides li {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  min-height: 400px;
+  position: relative;
+  border-radius: 4px;
+}
+.flexslider .flex-control-nav {
+  bottom: 20px;
+  z-index: 1000;
+  right: 20px;
+  float: right;
+  width: auto;
+}
+.flexslider .flex-control-nav li {
+  display: block;
+  margin-bottom: 10px;
+}
+.flexslider .flex-control-nav li a {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+}
+.flexslider .flex-control-nav li a.flex-active {
+  cursor: pointer;
+  background: var(--firstColor);
+  border: 2px solid var(--secondColor);
+}
+.flexslider .flex-direction-nav {
+  display: none;
+}
+@media screen and (max-width: 1200px) {
+  .flexslider {
+    width: 400px;
+  }
+  .flexslider .slides li {
+    min-height: 300px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .flexslider {
+    width: 100%;
+  }
+  .flexslider .slides li {
+    min-height: 400px;
+  }
 }
