@@ -188,3 +188,21 @@
     min-height: 400px;
   }
 }
+
+.page a {
+  width: 50px;
+  padding: 8px !important;
+}
+.page .active {
+  background-color: var(--firstHoverColor);
+}
+.page .btn-page-prev {
+  width: 60px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.page .btn-page-next {
+  width: 60px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

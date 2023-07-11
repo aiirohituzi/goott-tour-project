@@ -10,8 +10,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>음식점 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+    <meta
+      name="description"
+      content="Free HTML5 Website Template by FreeHTML5.co"
+    />
+    <meta
+      name="keywords"
+      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
+    />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -42,9 +48,15 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico" />
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700"
+      rel="stylesheet"
+    />
     <!-- Naver Web Font -->
-    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet" />
+    <link
+      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css"
+      rel="stylesheet"
+    />
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="../../css/animate.css" />
@@ -144,7 +156,8 @@
 
     <script>
       // 앱 키
-      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey =
+        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 메뉴를 출력할 element의 id 집합
       const selectElementIds = {
         area: "#area",
@@ -163,7 +176,7 @@
       let totalCount = 0;
       // 각 기능별 호출 api의 url 집합
       const urls = {
-        list: function (areaCode, sigunguCode, cat3Code) {
+        list: function (areaCode, sigunguCode, cat3Code, pageNo) {
           return `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A05&cat2=A0502&cat3=${cat3Code}&_type=json`;
         },
         area: `http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=${apiKey}&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
@@ -183,6 +196,39 @@
         getMenuCode(urls.cat3, selectElementIds.cat3);
 
         // 이벤트 리스너 추가
+        // TODO: 뭔가 ㅈ됨 페이지 네이션 수백씩 넘어감
+        $(".page")
+          .children()
+          .each(function (i, item) {
+            $(item).click(function () {
+              // console.log($(this));
+              // console.log($(this)[0].id);
+              if ($(this)[0].id == "btnPrev") {
+                pageNo = Math.floor(pageNo / 10) * 10 - 1;
+              } else if ($(this)[0].id == "btnNext") {
+                pageNo = Math.floor(pageNo / 10) * 10 + 10 + 1;
+              } else {
+                pageNo = Number($(this)[0].id);
+              }
+              getRestaurantsList(pageNo);
+            });
+          });
+        $(".page").on("DOMNodeInserted", function () {
+          $(".page")
+            .children()
+            .each(function (i, item) {
+              $(item).click(function () {
+                if ($(this)[0].id == "btnPrev") {
+                  pageNo = Math.floor(pageNo / 10) * 10 - 1;
+                } else if ($(this)[0].id == "btnNext") {
+                  pageNo = Math.floor(pageNo / 10) * 10 + 10 + 1;
+                } else {
+                  pageNo = Number($(this)[0].id);
+                }
+                getRestaurantsList(pageNo);
+              });
+            });
+        });
         // $(".more").click(function () {
         //   $(this).remove();
         //   pageNo++;
@@ -194,7 +240,10 @@
             selectedMenus.area = $(this).val();
             console.log("광역시/시 코드 선택 : " + selectedMenus.area);
             if (selectedMenus.area != "") {
-              getMenuCode(urls.sigungu(selectedMenus.area), selectElementIds.sigungu);
+              getMenuCode(
+                urls.sigungu(selectedMenus.area),
+                selectElementIds.sigungu
+              );
               $(selectElementIds.sigungu).parent().show();
             } else {
               $(selectElementIds.sigungu).parent().hide();
@@ -238,10 +287,21 @@
 
       function getRestaurantsList(pageNo) {
         $(".loading-indicator").show();
-        console.log(urls.list(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3));
+        console.log(
+          urls.list(
+            selectedMenus.area,
+            selectedMenus.sigungu,
+            selectedMenus.cat3
+          )
+        );
 
         $.ajax({
-          url: urls.list(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3), // 데이터를 수신 받을 서버 주소
+          url: urls.list(
+            selectedMenus.area,
+            selectedMenus.sigungu,
+            selectedMenus.cat3,
+            pageNo
+          ), // 데이터를 수신 받을 서버 주소
           type: "get", // 통신방식(GET, POST, PUT, DELETE)
           dataType: "json", // 수신 받을 데이터 타입
           async: false,
@@ -273,28 +333,64 @@
               output += `<div class="blog-entry">`;
               output += `<a href="./detail.html?contentId=${contentId}" class="blog-img">`;
               output += `<img src="${
-                item.firstimage != "" ? item.firstimage : item.firstimage2 != "" ? item.firstimage2 : "../../images/noimage_restaurants.png"
+                item.firstimage != ""
+                  ? item.firstimage
+                  : item.firstimage2 != ""
+                  ? item.firstimage2
+                  : "../../images/noimage_restaurants.png"
               }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
               output += `<div class="desc">`;
               output += `<h3><a href="./detail.html?contentId=${contentId}" title="${item.title}">${item.title}</a></h3>`;
-              output += `<p>${item.addr1}${item.addr2 != "" ? " " + item.addr2 : ""}</p>`;
-              output += `<span><small>등록일 : ${stringToDate(item.createdtime)}</small><br>`;
-              output += `<small>수정일 : ${stringToDate(item.modifiedtime)}</small></span>`;
+              output += `<p>${item.addr1}${
+                item.addr2 != "" ? " " + item.addr2 : ""
+              }</p>`;
+              output += `<span><small>등록일 : ${stringToDate(
+                item.createdtime
+              )}</small><br>`;
+              output += `<small>수정일 : ${stringToDate(
+                item.modifiedtime
+              )}</small></span>`;
               output += `<a href="./detail.html?contentId=${contentId}" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
               output += `</div>`;
               output += `</div>`;
               output += `</div>`;
             });
           }
-          $(".wrapper-restaurants-list").append(output);
+          // $(".wrapper-restaurants-list").append(output);
+          $(".wrapper-restaurants-list").html(output);
           $("#totalCount").html(`총 ${totalCount}건의 정보가 검색되었습니다.`);
+
+          const totalPage = Math.ceil(totalCount / numOfRows);
+          let pageOutput = "";
+          if (totalPage - pageNo < 10) {
+            // 마지막 페이지 구간
+          } else {
+            if (pageNo > 10) {
+              pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev">이전</a>`;
+            }
+            for (
+              let i = Math.floor(pageNo / 10) * 10 + 1;
+              i <= Math.floor(pageNo / 10) * 10 + 10;
+              i++
+            ) {
+              pageOutput += `<a href="#" class="btn btn-primary${
+                i == pageNo ? " active" : ""
+              }" id="${i}">${i}</a>`;
+            }
+            pageOutput += `<a href="#" class="btn btn-primary btn-page-next" id="btnNext">다음</a>`;
+          }
+          $(".page").html(pageOutput);
+
           contentWayPoint();
 
           function contentWayPoint() {
             var i = 0;
             $(".animate-box").waypoint(
               function (direction) {
-                if (direction === "down" && !$(this.element).hasClass("animated")) {
+                if (
+                  direction === "down" &&
+                  !$(this.element).hasClass("animated")
+                ) {
                   i++;
 
                   $(this.element).addClass("item-animate");
@@ -398,7 +494,12 @@
                 >Designed by
                 <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a>
               </span>
-              <span>Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></span></small
+              <span
+                >Demo Images:
+                <a href="https://unsplash.com/" target="_blank"
+                  >Unsplash</a
+                ></span
+              ></small
             >
           </p>
           <ul>
@@ -420,8 +521,16 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
-          <div class="wrapper-category animate-box" data-animate-effect="fadeInLeft">
+          <h2
+            class="fh5co-heading animate-box"
+            data-animate-effect="fadeInLeft"
+          >
+            음식점
+          </h2>
+          <div
+            class="wrapper-category animate-box"
+            data-animate-effect="fadeInLeft"
+          >
             <div>
               <small>광역시/시</small>
               <div id="area"></div>
@@ -456,6 +565,7 @@
               </div>
             </div> -->
           </div>
+          <div class="row row-bottom-padded-md page"></div>
         </div>
       </div>
     </div>
