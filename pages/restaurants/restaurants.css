@@ -188,3 +188,55 @@
     min-height: 400px;
   }
 }
+
+.page {
+  margin: auto;
+  width: fit-content;
+  white-space: nowrap;
+}
+.page a {
+  width: 50px;
+  padding: 8px !important;
+  margin: 0 2px;
+}
+.page .active {
+  background-color: var(--firstHoverColor);
+  border-color: var(--firstColor);
+}
+.page .btn-page-prev {
+  width: 60px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.page .btn-page-next {
+  width: 60px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+@media screen and (max-width: 1200px) {
+  .page a {
+    width: 30px;
+    font-size: 12px;
+    padding: 5px !important;
+  }
+  .page .btn-page-prev {
+    width: 40px;
+  }
+  .page .btn-page-next {
+    width: 40px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .page a {
+    width: 25px;
+    font-size: 10px;
+    padding: 5px 0 !important;
+    /* margin: 0 1px; */
+  }
+  .page .btn-page-prev {
+    width: 30px;
+  }
+  .page .btn-page-next {
+    width: 30px;
+  }
+}
