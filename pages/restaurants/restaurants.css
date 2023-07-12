@@ -21,6 +21,7 @@
     min-height: unset;
   }
 }
+
 .wrapper-category {
   display: flex;
 }
@@ -47,6 +48,9 @@
   flex-direction: column;
   justify-content: center;
   margin-right: 5px;
+}
+.wrapper-category input {
+  height: 45.5px;
 }
 @media screen and (max-width: 1200px) {
   .wrapper-total-count {
