@@ -87,6 +87,9 @@
 
     <!-- Modernizr JS -->
     <script src="../../js/modernizr-2.6.2.min.js"></script>
+
+    <!-- 쿠키 관련 함수 -->
+    <script src="./js/cookie.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></s>
@@ -188,6 +191,9 @@
           return `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A05&cat2=A0502&cat3=${cat3Code}&numOfRows=${numOfRows}&keyword=${keyword}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
         },
       };
+      const favoritesState = {
+        isOpened: false,
+      };
 
       $(function () {
         $(".loading-indicator").hide();
@@ -240,6 +246,14 @@
           if (event.keyCode == 13) {
             getRestaurantsList(pageNo);
           }
+        });
+        $(".btn-toggle-favorite").click(function () {
+          if (favoritesState.isOpened) {
+            $("#favorites").css("right", "-300px");
+          } else {
+            $("#favorites").css("right", "0");
+          }
+          favoritesState.isOpened = !favoritesState.isOpened;
         });
       });
 
@@ -462,6 +476,11 @@
         $(eid).html(output);
       }
 
+      function toggleFavorites(item) {
+        console.log(item);
+        // setCookie("favorites", item, 30);
+      }
+
       function stringToDate(str) {
         let year = str.substr(0, 4);
         let month = str.substr(4, 2);
@@ -586,6 +605,9 @@
           </div>
           <div class="page"></div>
         </div>
+      </div>
+      <div id="favorites" class="wrapper-favorites">
+        <div class="btn-toggle-favorite"></div>
       </div>
     </div>
     <div class="loading-indicator">
