@@ -10,14 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>음식점 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Free HTML5 Website Template by FreeHTML5.co"
-    />
-    <meta
-      name="keywords"
-      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
-    />
+    <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -48,15 +42,9 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" />
     <!-- Naver Web Font -->
-    <link
-      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css"
-      rel="stylesheet"
-    />
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet" />
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="../../css/animate.css" />
@@ -90,6 +78,8 @@
 
     <!-- 쿠키 관련 함수 -->
     <script src="./js/cookie.js"></script>
+    <!-- 찜 목록 관련 함수 -->
+    <script src="./js/restaurants.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></s>
@@ -159,8 +149,7 @@
 
     <script>
       // 앱 키
-      const apiKey =
-        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 메뉴를 출력할 element의 id 집합
       const selectElementIds = {
         area: "#area",
@@ -199,22 +188,22 @@
         $(".loading-indicator").hide();
         $(selectElementIds.sigungu).parent().hide();
 
+        // 찜목록 그리기
+        drawFavorites();
+
         // api 요청
         getRestaurantsList(pageNo);
         getMenuCode(urls.area, selectElementIds.area);
         getMenuCode(urls.cat3, selectElementIds.cat3);
 
-        // 이벤트 리스너 추가
+        // ----- 이벤트 리스너 추가 --------------------------------------
         $(selectElementIds.area)
           .children()
           .change(function () {
             selectedMenus.area = $(this).val();
             console.log("광역시/시 코드 선택 : " + selectedMenus.area);
             if (selectedMenus.area != "") {
-              getMenuCode(
-                urls.sigungu(selectedMenus.area),
-                selectElementIds.sigungu
-              );
+              getMenuCode(urls.sigungu(selectedMenus.area), selectElementIds.sigungu);
               $(selectElementIds.sigungu).parent().show();
             } else {
               $(selectElementIds.sigungu).parent().hide();
@@ -247,6 +236,7 @@
             getRestaurantsList(pageNo);
           }
         });
+        // 찜 목록 버튼 이벤트 리스너 추가
         $(".btn-toggle-favorite").click(function () {
           if (favoritesState.isOpened) {
             $("#favorites").css("right", "-300px");
@@ -255,6 +245,7 @@
           }
           favoritesState.isOpened = !favoritesState.isOpened;
         });
+        // ---------------------------------------------------------------
       });
 
       /*
@@ -272,31 +263,13 @@
 
       function getRestaurantsList(pageNo) {
         $(".loading-indicator").show();
-        console.log(
-          "요청 url [목록]",
-          urls.list(
-            selectedMenus.area,
-            selectedMenus.sigungu,
-            selectedMenus.cat3
-          )
-        );
+        console.log("요청 url [목록]", urls.list(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3));
         const keyword = $("#keyword").val();
         $.ajax({
           url:
             keyword == ""
-              ? urls.list(
-                  selectedMenus.area,
-                  selectedMenus.sigungu,
-                  selectedMenus.cat3,
-                  pageNo
-                )
-              : urls.keyword(
-                  selectedMenus.area,
-                  selectedMenus.sigungu,
-                  selectedMenus.cat3,
-                  pageNo,
-                  keyword
-                ), // 데이터를 수신 받을 서버 주소
+              ? urls.list(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3, pageNo)
+              : urls.keyword(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3, pageNo, keyword), // 데이터를 수신 받을 서버 주소
           type: "get", // 통신방식(GET, POST, PUT, DELETE)
           dataType: "json", // 수신 받을 데이터 타입
           async: false,
@@ -325,28 +298,26 @@
               const contentId = item.contentid;
 
               output += `<div class="items col-lg-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">`;
-              output += `<div class="blog-entry">`;
-              output += `<a href="./detail.html?contentId=${contentId}" class="blog-img">`;
+              output += `<div class="blog-entry" onclick="viewDetail('${contentId}');">`;
+              output += `<a href="#" class="blog-img">`;
               output += `<img src="${
-                item.firstimage != ""
-                  ? item.firstimage
-                  : item.firstimage2 != ""
-                  ? item.firstimage2
-                  : "../../images/noimage_restaurants.png"
+                item.firstimage != "" ? item.firstimage : item.firstimage2 != "" ? item.firstimage2 : "../../images/noimage_restaurants.png"
               }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
               output += `<div class="desc">`;
-              output += `<h3><a href="./detail.html?contentId=${contentId}" title="${item.title}">${item.title}</a></h3>`;
-              output += `<p>${item.addr1}${
-                item.addr2 != "" ? " " + item.addr2 : ""
-              }</p>`;
-              output += `<span><small>등록일 : ${stringToDate(
-                item.createdtime
-              )}</small><br>`;
-              output += `<small>수정일 : ${stringToDate(
-                item.modifiedtime
-              )}</small></span>`;
-              output += `<a href="./detail.html?contentId=${contentId}" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
-              output += `<button onclick="toggleFavorites('${contentId}', '${item.title}', '${item.firstimage}');">찜하기(test)</button>`;
+              output += `<h3>`;
+              output += `<a href="#" title="${item.title}">${item.title}</a>`;
+              output += `</h3>`;
+              output += `<p>${item.addr1}${item.addr2 != "" ? " " + item.addr2 : ""}</p>`;
+              output += `<div class="desc-flex margin-bottom-0">`;
+              output += `<span><small>등록일</small></span><span><small>${stringToDate(item.createdtime)}</small><span>`;
+              output += `</div>`;
+              output += `<div class="desc-flex">`;
+              output += `<span><small>수정일</small></span><span><small>${stringToDate(item.modifiedtime)}</small></span>`;
+              output += `</div>`;
+              output += `<div class="desc-footer">`;
+              output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
+              output += `<i id="i${contentId}" class="icon-star3 list-favoriteIcon" onclick="toggleFavorites('${contentId}', '${item.title}', '${item.firstimage}');"></i>`;
+              output += `</div>`;
               output += `</div>`;
               output += `</div>`;
               output += `</div>`;
@@ -354,6 +325,9 @@
           }
           // $(".wrapper-restaurants-list").append(output);
           $(".wrapper-restaurants-list").html(output);
+
+          updateFavoritesIcon();
+
           $("#totalCount").html(`총 ${totalCount}건의 정보가 검색되었습니다.`);
 
           const totalPage = Math.ceil(totalCount / numOfRows);
@@ -361,39 +335,21 @@
           let pageOutput = "";
           if (totalPage < 11) {
             // 페이지가 10개 이하, 이전, 다음 없음
-            for (
-              let i = Math.floor(pageNo / 10) * 10 + 1;
-              i <= totalPage;
-              i++
-            ) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+            for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else if (totalPage - pageNo < 11) {
             // 마지막 페이지 구간, 다음 없음
             pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
-            for (
-              let i = Math.floor(pageNo / 10) * 10 + 1;
-              i <= totalPage;
-              i++
-            ) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+            for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else {
             if (pageNo > 10) {
               pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
             }
-            for (
-              let i = Math.floor(pageNo / 10) * 10 + 1;
-              i <= Math.floor(pageNo / 10) * 10 + 10;
-              i++
-            ) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+            for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= Math.floor(pageNo / 10) * 10 + 10; i++) {
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
             pageOutput += `<a href="#" class="btn btn-primary btn-page-next" id="btnNext" onclick="pageControlHandler(this.id);">다음</a>`;
           }
@@ -405,10 +361,7 @@
             var i = 0;
             $(".animate-box").waypoint(
               function (direction) {
-                if (
-                  direction === "down" &&
-                  !$(this.element).hasClass("animated")
-                ) {
+                if (direction === "down" && !$(this.element).hasClass("animated")) {
                   i++;
 
                   $(this.element).addClass("item-animate");
@@ -477,69 +430,7 @@
         $(eid).html(output);
       }
 
-      /*
-      찜하기 버튼 핸들러 (토글 방식으로 작동)
-      쿠키는 JSON을 string 변환하여 관리
-      쿠키를 읽어와서 JSON.parse
-      버튼이 눌린 아이템의 contentId가 존재하면 해당 항목을 삭제하고
-      없으면 항목을 추가한다.
-      JSON 가공이 끝났으면 다시 JSON.stringify 후 쿠키 저장
-      */
-      function toggleFavorites(contentId, title, imageUrl) {
-        // console.log(contentId, title, imageUrl);
-        const addCookieObj = {
-          contentId: contentId,
-          title: title,
-          firstimage: imageUrl,
-        };
-
-        let cookie = getCookie("favorites");
-        const cookieJSON = JSON.parse(cookie);
-        let isExist = false;
-        let dupIndex = -1;
-        if (cookie) {
-          // 쿠키값이 있음 (빈배열 일 수는 있음)
-          $.each(cookieJSON, function (i, item) {
-            if (item.contentId == contentId) {
-              isExist = true;
-              dupIndex = i;
-            }
-          });
-          if (isExist) {
-            // 쿠키에 해당 contentId가 존재, 항목 삭제
-            cookieJSON.splice(dupIndex, 1);
-          } else {
-            // 쿠키에 해당 contentId가 없음, 항목 추가
-            cookieJSON = [...cookieJSON, addCookieObj];
-          }
-        } else {
-          // 쿠키값이 없음, 첫 값 추가
-          cookieJSON = [addCookieObj];
-        }
-        setCookie("favorites", JSON.stringify(cookieJSON), 30);
-        drawFavorites();
-      }
-
-      /*
-      쿠키를 불러와서 JSON.parse
-      반복문 돌려서 제목, 사진을 목록으로 출력
-      각 목록마다 클릭하면 상세 페이지로 넘어갈 수 있도록
-      클릭 이벤트도 추가
-      */
-      function drawFavorites() {
-        let cookie = getCookie("favorites");
-        const cookieJSON = JSON.parse(cookie);
-        let output = "";
-        $.each(cookieJSON, function (i, item) {
-          output += `<li><div>`;
-          output += `<div>${item.title}</div>`;
-          output += `<div><img src="${item.firstimage}" /></div>`;
-          output += `</div></li>`;
-        });
-        console.log(output);
-        $("#favorites-list").html(output);
-      }
-
+      // api로 받은 데이터의 날짜값 parsing
       function stringToDate(str) {
         let year = str.substr(0, 4);
         let month = str.substr(4, 2);
@@ -551,6 +442,7 @@
         return `${year}년 ${month}월 ${date}일 ${hour}:${minute}:${second}`;
       }
 
+      // 페이지 버튼 (이전, 페이지숫자, 다음) 핸들러
       function pageControlHandler(id) {
         if (id == "btnPrev") {
           pageNo = Math.floor(pageNo / 10) * 10 - 1;
@@ -587,12 +479,7 @@
                 >Designed by
                 <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a>
               </span>
-              <span
-                >Demo Images:
-                <a href="https://unsplash.com/" target="_blank"
-                  >Unsplash</a
-                ></span
-              ></small
+              <span>Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></span></small
             >
           </p>
           <ul>
@@ -614,16 +501,8 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2
-            class="fh5co-heading animate-box"
-            data-animate-effect="fadeInLeft"
-          >
-            음식점
-          </h2>
-          <div
-            class="wrapper-category animate-box"
-            data-animate-effect="fadeInLeft"
-          >
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
+          <div class="wrapper-category animate-box" data-animate-effect="fadeInLeft">
             <div>
               <small>광역시/시</small>
               <div id="area"></div>
@@ -665,9 +544,12 @@
           <div class="page"></div>
         </div>
       </div>
-      <div id="favorites" class="wrapper-favorites">
-        <div class="btn-toggle-favorite"></div>
-        <ul id="favorites-list"></ul>
+      <div id="favorites" class="favorites">
+        <div class="btn-toggle-favorite"><i class="icon-star3"></i></div>
+        <div class="wrapper-favorites">
+          <h3>My Favorites</h3>
+          <ul id="favorites-list"></ul>
+        </div>
       </div>
     </div>
     <div class="loading-indicator">
