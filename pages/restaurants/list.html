@@ -346,6 +346,7 @@
                 item.modifiedtime
               )}</small></span>`;
               output += `<a href="./detail.html?contentId=${contentId}" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
+              output += `<button onclick="toggleFavorites('${contentId}', '${item.title}', '${item.firstimage}');">찜하기(test)</button>`;
               output += `</div>`;
               output += `</div>`;
               output += `</div>`;
@@ -476,9 +477,67 @@
         $(eid).html(output);
       }
 
-      function toggleFavorites(item) {
-        console.log(item);
-        // setCookie("favorites", item, 30);
+      /*
+      찜하기 버튼 핸들러 (토글 방식으로 작동)
+      쿠키는 JSON을 string 변환하여 관리
+      쿠키를 읽어와서 JSON.parse
+      버튼이 눌린 아이템의 contentId가 존재하면 해당 항목을 삭제하고
+      없으면 항목을 추가한다.
+      JSON 가공이 끝났으면 다시 JSON.stringify 후 쿠키 저장
+      */
+      function toggleFavorites(contentId, title, imageUrl) {
+        // console.log(contentId, title, imageUrl);
+        const addCookieObj = {
+          contentId: contentId,
+          title: title,
+          firstimage: imageUrl,
+        };
+
+        let cookie = getCookie("favorites");
+        const cookieJSON = JSON.parse(cookie);
+        let isExist = false;
+        let dupIndex = -1;
+        if (cookie) {
+          // 쿠키값이 있음 (빈배열 일 수는 있음)
+          $.each(cookieJSON, function (i, item) {
+            if (item.contentId == contentId) {
+              isExist = true;
+              dupIndex = i;
+            }
+          });
+          if (isExist) {
+            // 쿠키에 해당 contentId가 존재, 항목 삭제
+            cookieJSON.splice(dupIndex, 1);
+          } else {
+            // 쿠키에 해당 contentId가 없음, 항목 추가
+            cookieJSON = [...cookieJSON, addCookieObj];
+          }
+        } else {
+          // 쿠키값이 없음, 첫 값 추가
+          cookieJSON = [addCookieObj];
+        }
+        setCookie("favorites", JSON.stringify(cookieJSON), 30);
+        drawFavorites();
+      }
+
+      /*
+      쿠키를 불러와서 JSON.parse
+      반복문 돌려서 제목, 사진을 목록으로 출력
+      각 목록마다 클릭하면 상세 페이지로 넘어갈 수 있도록
+      클릭 이벤트도 추가
+      */
+      function drawFavorites() {
+        let cookie = getCookie("favorites");
+        const cookieJSON = JSON.parse(cookie);
+        let output = "";
+        $.each(cookieJSON, function (i, item) {
+          output += `<li><div>`;
+          output += `<div>${item.title}</div>`;
+          output += `<div><img src="${item.firstimage}" /></div>`;
+          output += `</div></li>`;
+        });
+        console.log(output);
+        $("#favorites-list").html(output);
       }
 
       function stringToDate(str) {
@@ -608,6 +667,7 @@
       </div>
       <div id="favorites" class="wrapper-favorites">
         <div class="btn-toggle-favorite"></div>
+        <ul id="favorites-list"></ul>
       </div>
     </div>
     <div class="loading-indicator">
