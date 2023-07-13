@@ -1,3 +1,4 @@
+/* #e2eed1; secondColor 투명도 제거 컬러 코드 */
 .blog-entry {
   cursor: pointer;
 }
@@ -51,15 +52,19 @@
   color: var(--firstColor);
   font-size: 40px;
   transition-timing-function: ease;
-  transition-duration: 300ms;
-  opacity: 0.7;
+  transition-duration: 400ms;
+  opacity: 0.5;
 }
 .blog-entry i.icon-star3:hover {
   color: var(--firstHoverColor);
+  opacity: 0.9;
 }
 .blog-entry i.icon-star3.active {
   color: var(--firstHoverColor);
   opacity: 1;
+}
+.blog-entry i.icon-star3.active:hover {
+  opacity: 0.9;
 }
 @media screen and (max-width: 768px) {
   .blog-entry .blog-img img {
@@ -350,11 +355,13 @@
   justify-content: space-between;
   margin-bottom: 10px;
   color: #000;
-  border: 3px solid var(--firstColor);
+  border: 2px solid var(--firstColor);
   border-radius: 8px;
   position: relative;
   cursor: pointer;
   box-shadow: 2px 2px 4px #999;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
 }
 .favorites .wrapper-favorites li:hover {
   box-shadow: 2px 2px 4px #555;
@@ -372,10 +379,7 @@
   width: 100%;
   object-fit: cover;
   height: 100px;
-  border-radius: 5px;
-}
-.favorites .wrapper-favorites li i:hover {
-  opacity: 0.7;
+  border-radius: 6px;
 }
 .favorites .wrapper-favorites li i {
   position: absolute;
@@ -384,4 +388,10 @@
   color: var(--firstColor);
   cursor: pointer;
   font-size: 30px;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+}
+.favorites .wrapper-favorites li i:hover {
+  opacity: 0.7;
+  color: var(--firstHoverColor);
 }

@@ -240,8 +240,10 @@
         $(".btn-toggle-favorite").click(function () {
           if (favoritesState.isOpened) {
             $("#favorites").css("right", "-300px");
+            $(".favorites .btn-toggle-favorite").css("opacity", "0.7");
           } else {
             $("#favorites").css("right", "0");
+            $(".favorites .btn-toggle-favorite").css("opacity", "1");
           }
           favoritesState.isOpened = !favoritesState.isOpened;
         });
