@@ -30,18 +30,25 @@ function toggleFavorites(contentId, title, imageUrl) {
     if (isExist) {
       // 쿠키에 해당 contentId가 존재, 항목 삭제
       cookieJSON.splice(dupIndex, 1);
+      showToast("찜 목록에서 제거되었습니다");
     } else {
       // 쿠키에 해당 contentId가 없음, 항목 추가
       cookieJSON = [...cookieJSON, addCookieObj];
+      showToast("찜 목록에 추가하였습니다");
     }
   } else {
     // 쿠키값이 없음, 첫 값 추가
     cookieJSON = [addCookieObj];
+    showToast("찜 목록에 추가하였습니다");
   }
   setCookie("favorites", JSON.stringify(cookieJSON), 30);
   drawFavorites();
 }
 
+$(function () {
+  const toastDOM = '<div class="toast-message">' + '<div id="toastMessage"></div>' + '<i class="icon-cross2" onclick="closeToast();"></i>' + "</div>";
+  $("body").append(toastDOM);
+});
 // 찜 목록에서 찜 목록 삭제
 function deleteFavorite(contentId) {
   event.stopPropagation();
@@ -59,6 +66,7 @@ function deleteFavorite(contentId) {
 
   setCookie("favorites", JSON.stringify(cookieJSON), 30);
   drawFavorites();
+  showToast("찜 목록에서 제거되었습니다");
 }
 
 /*
@@ -100,4 +108,15 @@ function updateFavoritesIcon() {
 // contentId를 파라메터로 detail.html으로 이동
 function viewDetail(contentId) {
   location.href = `./detail.html?contentId=${contentId}`;
+}
+
+function showToast(msg) {
+  $(".toast-message").removeClass("on");
+  $("#toastMessage").html(msg);
+  setTimeout(() => {
+    $(".toast-message").addClass("on");
+  }, 50);
+}
+function closeToast() {
+  $(".toast-message").removeClass("on");
 }
