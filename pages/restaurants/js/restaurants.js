@@ -91,7 +91,7 @@ function updateFavoritesIcon() {
   let cookie = getCookie("favorites");
   const cookieJSON = cookie ? [...JSON.parse(cookie)] : [];
 
-  $(".list-favoriteIcon").removeClass("active");
+  $(".favoriteIcon").removeClass("active");
   $.each(cookieJSON, function (i, item) {
     $(`#i${item.contentId}`).addClass("active");
   });

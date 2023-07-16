@@ -282,6 +282,7 @@
           },
           err: function () {
             // 통신이 실패(부정적인 response) 했을 때 호출되는 콜백함수
+            console.log(data);
           },
           complete: function () {
             // 통신이 완료되었을 때 호출 되는 콜백함수
@@ -318,7 +319,7 @@
               output += `</div>`;
               output += `<div class="desc-footer">`;
               output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
-              output += `<i id="i${contentId}" class="icon-star3 list-favoriteIcon" onclick="toggleFavorites('${contentId}', '${item.title}', '${item.firstimage}');"></i>`;
+              output += `<i id="i${contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${contentId}', '${item.title}', '${item.firstimage}');"></i>`;
               output += `</div>`;
               output += `</div>`;
               output += `</div>`;

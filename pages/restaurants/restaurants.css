@@ -117,6 +117,17 @@
   }
 }
 
+.icon-arrow-back.btn-back {
+  cursor: pointer;
+  color: var(--firstColor);
+  font-size: 30px;
+  align-self: center;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+}
+.icon-arrow-back.btn-back:hover {
+  opacity: 0.7;
+}
 .wrapper-restaurants-detail {
   padding: 20px;
 }
@@ -136,6 +147,30 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title h3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3 {
+  cursor: pointer;
+  color: var(--firstColor);
+  font-size: 35px;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+  opacity: 0.5;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3:hover {
+  color: var(--firstHoverColor);
+  opacity: 0.9;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3.active {
+  color: var(--firstHoverColor);
+  opacity: 1;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3.active:hover {
+  opacity: 0.9;
 }
 .wrapper-restaurants-detail .detail-content-wrapper .detail-title > div {
   display: flex;

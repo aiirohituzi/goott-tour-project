@@ -177,7 +177,7 @@
       // 각 기능별 호출 api의 url 집합
       const urls = {
         common: function (contentId) {
-          return `http://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=${contentId}&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json`;
+          return `http://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=${contentId}&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&firstImageYN=Y&_type=json`;
         },
         intro: function (contentId) {
           return `http://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=${contentId}&contentTypeId=39&serviceKey=${apiKey}&MobileOS=ETC&MobileApp=AppTest&_type=json`;
@@ -295,9 +295,10 @@
             $.each(itemArr, function (i, item) {
               switch (apiType) {
                 case "common":
+                  console.log(item);
                   output += `<div class="detail-content-wrapper">`;
                   output += `<div class="detail-title">`;
-                  output += `<h3 class="fh5co-heading">${item.title}</h3>`;
+                  output += `<h3 class="fh5co-heading">${item.title}<i id="i${item.contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${item.contentId}', '${item.title}', '${item.firstimage}');"></i></h3>`;
                   output += `<div>`;
                   output += `${isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""}`;
                   output += `${isNotEmpty(item.modifiedtime) ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>" : ""}`;
@@ -371,6 +372,8 @@
           }
 
           $(outputElementIds[apiType]).html(output);
+
+          updateFavoritesIcon();
 
           contentWayPoint();
 
@@ -446,6 +449,10 @@
         }
         return returnVal;
       }
+
+      function toBack() {
+        location.href = "list.html";
+      }
     </script>
   </head>
   <body>
@@ -493,7 +500,7 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft"><i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점</h2>
 
           <div class="row row-bottom-padded-md wrapper-restaurants-detail">
             <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>
