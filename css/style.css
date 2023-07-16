@@ -1,7 +1,7 @@
 :root {
   --firstColor: #064420;
   --firstHoverColor: #09632e;
-  --secondColor: #8abc4840;
+  --secondColor: #E2EED1;
   --errorColor: #fd5e53;
 }
 
@@ -474,7 +474,7 @@ body.offcanvas #fh5co-aside {
   -o-transform: translateX(0);
   transform: translateX(0);
   width: 270px;
-  background: #fff;
+  background-color: var(--secondColor);
   z-index: 999;
   position: fixed;
 }
