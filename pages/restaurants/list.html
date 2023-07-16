@@ -212,7 +212,7 @@
             }
           });
         $(selectElementIds.sigungu).on("DOMNodeInserted", function () {
-          // console.log("시군구 div DOM 변경");
+          // 시군구 div DOM 변경;
           $(selectElementIds.sigungu)
             .children()
             .change(function () {
@@ -277,15 +277,20 @@
           async: false,
           success: function (data) {
             // 통신이 성공했을 때 호출되는 콜백함수
-            console.log(data);
+            console.log("[success]", data);
             parsingData(data);
           },
-          err: function () {
+          err: function (err) {
             // 통신이 실패(부정적인 response) 했을 때 호출되는 콜백함수
-            console.log(data);
+            console.log("[error]" + err);
           },
-          complete: function () {
+          complete: function ({ responseText }) {
             // 통신이 완료되었을 때 호출 되는 콜백함수
+            const responseXML = new DOMParser().parseFromString(responseText, "text/html");
+            if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
+              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
+              showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
+            }
             $(".loading-indicator").hide();
           },
         });
@@ -409,14 +414,21 @@
           async: false,
           success: function (data) {
             // 통신이 성공했을 때 호출되는 콜백함수
-            // console.log(data);
+            console.log("[success]" + data);
             drawSelect(data, eid);
           },
-          err: function () {
+          err: function (err) {
+            console.log("[ajax error]" + err);
             // 통신이 실패(부정적인 response) 했을 때 호출되는 콜백함수
           },
-          complete: function () {
+          complete: function ({ responseText }) {
+            // console.log("[complete]", responseText);
             // 통신이 완료되었을 때 호출 되는 콜백함수
+            const responseXML = new DOMParser().parseFromString(responseText, "text/html");
+            if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
+              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
+              showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
+            }
             $(".loading-indicator").hide();
           },
         });
