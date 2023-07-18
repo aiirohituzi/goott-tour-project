@@ -80,6 +80,10 @@
     <script src="./js/cookie.js"></script>
     <!-- 찜 목록 관련 함수 -->
     <script src="./js/restaurants.js"></script>
+    <!-- KakaoMap API -->
+    <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e1e0c5e9d5b086334529c494222162e0&libraries=services"></script>
+    <!-- KakaoMap 관련 함수 -->
+    <script src="./js/restaurants_kakaomap.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></s>
@@ -218,11 +222,12 @@
           } else {
             contentId = getParameter("contentId");
             // api 요청
-            getRestaurantDetail("common", contentId);
-            getRestaurantDetail("intro", contentId);
-            getRestaurantDetail("info", contentId);
-            getRestaurantDetail("petTour", contentId);
-            getRestaurantDetail("image", contentId);
+            // getRestaurantDetail("common", contentId);
+            // getRestaurantDetail("intro", contentId);
+            // getRestaurantDetail("info", contentId);
+            // getRestaurantDetail("petTour", contentId);
+            // getRestaurantDetail("image", contentId);
+            drawKakaoMap("37.2971166997", "126.8580034344");
           }
         });
 
@@ -301,7 +306,7 @@
             $.each(itemArr, function (i, item) {
               switch (apiType) {
                 case "common":
-                  // console.log(item);
+                  console.log(item);
                   output += `<div class="detail-content-wrapper">`;
                   output += `<div class="detail-title">`;
                   output += `<h3 class="fh5co-heading">${item.title}<i id="i${item.contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${item.contentId}', '${item.title}', '${item.firstimage}');"></i></h3>`;
@@ -321,6 +326,7 @@
                   output += isNotEmpty(item.homepage) ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>` : "";
                   output += `</div>`;
                   output += `</div>`;
+                  drawKakaoMap(item.mapy, item.mapx);
                   break;
                 case "intro":
                   output += `<div class="detail-content-wrapper detail-content-flex">`;
@@ -517,14 +523,18 @@
           <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft"><i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점</h2>
 
           <div class="row row-bottom-padded-md wrapper-restaurants-detail">
-            <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>
+            <!-- <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>
             <div id="detailCommon" class="animate-box" data-animate-effect="fadeInLeft"></div>
             <div id="detailIntro" class="animate-box" data-animate-effect="fadeInLeft"></div>
             <div id="detailInfo" class="animate-box" data-animate-effect="fadeInLeft"></div>
-            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div>
+            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div> -->
+            <!-- <div id="detailMap" class="animate-box detail-content-wrapper" data-animate-effect="fadeInLeft">
+              <h5>지도</h5>
+              <div id="map"></div>
+            </div> -->
 
             <!-- ┌- 목업 데이터 -->
-            <!-- <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft">
+            <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft">
               <ul class="slides">
                 <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/26/2866226_image2_1.jpg)">
                   <div class="overlay"></div>
@@ -619,7 +629,40 @@
               </div>
             </div>
 
-            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div> -->
+            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div>
+
+            <div id="detailMap" class="animate-box detail-content-wrapper" data-animate-effect="fadeInLeft">
+              <h5>지도</h5>
+              <div class="map_wrap">
+                <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
+                <ul id="category">
+                  <li id="PK6" data-order="0">
+                    <span class="category_bg parking"></span>
+                    주차장
+                  </li>
+                  <li id="MT1" data-order="1">
+                    <span class="category_bg mart"></span>
+                    마트
+                  </li>
+                  <li id="PM9" data-order="2">
+                    <span class="category_bg pharmacy"></span>
+                    약국
+                  </li>
+                  <li id="OL7" data-order="3">
+                    <span class="category_bg oil"></span>
+                    주유소
+                  </li>
+                  <li id="CE7" data-order="4">
+                    <span class="category_bg cafe"></span>
+                    카페
+                  </li>
+                  <li id="CS2" data-order="5">
+                    <span class="category_bg store"></span>
+                    편의점
+                  </li>
+                </ul>
+              </div>
+            </div>
             <!-- └- 목업 데이터 -->
           </div>
         </div>
