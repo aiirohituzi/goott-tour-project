@@ -356,22 +356,25 @@
           const totalPage = Math.ceil(totalCount / numOfRows);
           // console.log(totalPage);
           let pageOutput = "";
-          if (totalPage < 11) {
+          if (totalPage <= 10) {
             // 페이지가 10개 이하, 이전, 다음 없음
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
               pageOutput += `<a href="#" class="btn btn-primary${
                 i == pageNo ? " active" : ""
               }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
-          } else if (totalPage - pageNo < 11) {
+          } else if (totalPage - pageNo < 10) {
             // 마지막 페이지 구간, 다음 없음
             pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
+            console.log(Math.floor(pageNo / 10) * 10 + 1);
+            console.log(totalPage);
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
               pageOutput += `<a href="#" class="btn btn-primary${
                 i == pageNo ? " active" : ""
               }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else {
+            // 페이지가 10개 초과이고 마지막 구간도 아님, 이전, 다음 모두 존재
             if (pageNo > 10) {
               pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
             }
