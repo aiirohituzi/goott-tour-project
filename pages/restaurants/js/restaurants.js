@@ -46,7 +46,11 @@ function toggleFavorites(contentId, title, imageUrl) {
 }
 
 $(function () {
-  const toastDOM = '<div class="toast-message">' + '<div id="toastMessage"></div>' + '<i class="icon-cross2" onclick="closeToast();"></i>' + "</div>";
+  const toastDOM =
+    '<div class="toast-message">' +
+    '<div id="toastMessage"></div>' +
+    '<i class="icon-cross2" onclick="closeToast();"></i>' +
+    "</div>";
   $("body").append(toastDOM);
 });
 // 찜 목록에서 찜 목록 삭제
@@ -85,7 +89,11 @@ function drawFavorites() {
   } else {
     $.each(cookieJSON, function (i, item) {
       output += `<li onclick="viewDetail('${item.contentId}');">`;
-      output += `<div><img src="${item.firstimage != "" ? item.firstimage : "../../images/noimage_restaurants.png"}" /></div>`;
+      output += `<div><img src="${
+        item.firstimage != ""
+          ? item.firstimage
+          : "../../images/noimage_restaurants.png"
+      }" /></div>`;
       output += `<div><i class="icon-star3" onclick="deleteFavorite('${item.contentId}');"></i>${item.title}</div>`;
       output += `</li>`;
     });
