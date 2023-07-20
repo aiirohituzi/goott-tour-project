@@ -271,7 +271,7 @@
 
       function getRestaurantDetail(apiType, contentId) {
         $(".loading-indicator").show();
-        console.log(urls[apiType](contentId));
+        // console.log(urls[apiType](contentId));
 
         $.ajax({
           url: urls[apiType](contentId), // 데이터를 수신 받을 서버 주소
@@ -316,7 +316,7 @@
             $.each(itemArr, function (i, item) {
               switch (apiType) {
                 case "common":
-                  console.log(item);
+                  // console.log(item);
                   output += `<div class="detail-content-wrapper">`;
                   output += `<div class="detail-title">`;
                   output += `<h3 class="fh5co-heading">${item.title}<i id="i${item.contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${item.contentId}', '${item.title}', '${item.firstimage}');"></i></h3>`;

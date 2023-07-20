@@ -366,8 +366,8 @@
           } else if (totalPage - pageNo < 10) {
             // 마지막 페이지 구간, 다음 없음
             pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
-            console.log(Math.floor(pageNo / 10) * 10 + 1);
-            console.log(totalPage);
+            // console.log(Math.floor(pageNo / 10) * 10 + 1);
+            // console.log(totalPage);
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
               pageOutput += `<a href="#" class="btn btn-primary${
                 i == pageNo ? " active" : ""
