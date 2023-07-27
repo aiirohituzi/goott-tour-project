@@ -8,13 +8,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>음식점 정보</title>
+    <title>음식점 정보(김용진)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta
-      name="keywords"
-      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
-    />
+    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -84,10 +81,7 @@
     <!-- 찜 목록 관련 함수 -->
     <script src="./js/restaurants.js"></script>
     <!-- KakaoMap API -->
-    <script
-      type="text/javascript"
-      src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e1e0c5e9d5b086334529c494222162e0&libraries=services"
-    ></script>
+    <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e1e0c5e9d5b086334529c494222162e0&libraries=services"></script>
     <!-- KakaoMap 관련 함수 -->
     <script src="./js/restaurants_kakaomap.js"></script>
     <!-- FOR IE9 below -->
@@ -97,8 +91,7 @@
 
     <script>
       // 앱 키
-      const apiKey =
-        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 데이터를 출력할 element의 id 집합
       const outputElementIds = {
         common: "#detailCommon",
@@ -201,10 +194,7 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(
-                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
-                responseXML.getElementsByTagName("errMsg")[0].outerText
-              );
+              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -231,74 +221,40 @@
                   output += `<div class="detail-title">`;
                   output += `<h3 class="fh5co-heading">${item.title}<i id="i${item.contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${item.contentId}', '${item.title}', '${item.firstimage}');"></i></h3>`;
                   output += `<div>`;
-                  output += `${
-                    isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""
-                  }`;
-                  output += `${
-                    isNotEmpty(item.modifiedtime)
-                      ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>"
-                      : ""
-                  }`;
+                  output += `${isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""}`;
+                  output += `${isNotEmpty(item.modifiedtime) ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>" : ""}`;
                   output += `</div>`;
                   output += `</div>`;
                   output += isNotEmpty(item.overview) ? `<div>${item.overview}</div>` : "";
                   output += `<div class="detail-content-flex">`;
                   output += isNotEmpty(item.addr1)
-                    ? `<div><h5>주소</h5><span>${item.addr1}${
-                        isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""
-                      }</span></div>`
+                    ? `<div><h5>주소</h5><span>${item.addr1}${isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""}</span></div>`
                     : "";
                   output += isNotEmpty(item.zipcode) ? `<div><h5>우편번호</h5><span>${item.zipcode}</span></div>` : "";
                   // output += isNotEmpty(item.telname) ? `<div><h5>전화번호명</h5><span>${item.telname}</span></div>` : "";
                   output += isNotEmpty(item.tel) ? `<div><h5>전화번호</h5><span>${item.tel}</span></div>` : "";
-                  output += isNotEmpty(item.homepage)
-                    ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>`
-                    : "";
+                  output += isNotEmpty(item.homepage) ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>` : "";
                   output += `</div>`;
                   output += `</div>`;
                   drawKakaoMap(item.mapy, item.mapx);
                   break;
                 case "intro":
                   output += `<div class="detail-content-wrapper detail-content-flex">`;
-                  output += isNotEmpty(item.firstmenu)
-                    ? `<div><h5>대표 메뉴</h5><span>${item.firstmenu}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.treatmenu)
-                    ? `<div><h5>취급 메뉴</h5><span>${item.treatmenu}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.opentimefood)
-                    ? `<div><h5>영업시간</h5><span>${item.opentimefood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.restdatefood)
-                    ? `<div><h5>쉬는 날</h5><span>${item.restdatefood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.parkingfood)
-                    ? `<div><h5>주차 시설</h5><span>${item.parkingfood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.reservationfood)
-                    ? `<div><h5>예약 안내</h5><span>${item.reservationfood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.discountinfofood)
-                    ? `<div><h5>할인 정보</h5><span>${item.discountinfofood}</span></div>`
-                    : "";
+                  output += isNotEmpty(item.firstmenu) ? `<div><h5>대표 메뉴</h5><span>${item.firstmenu}</span></div>` : "";
+                  output += isNotEmpty(item.treatmenu) ? `<div><h5>취급 메뉴</h5><span>${item.treatmenu}</span></div>` : "";
+                  output += isNotEmpty(item.opentimefood) ? `<div><h5>영업시간</h5><span>${item.opentimefood}</span></div>` : "";
+                  output += isNotEmpty(item.restdatefood) ? `<div><h5>쉬는 날</h5><span>${item.restdatefood}</span></div>` : "";
+                  output += isNotEmpty(item.parkingfood) ? `<div><h5>주차 시설</h5><span>${item.parkingfood}</span></div>` : "";
+                  output += isNotEmpty(item.reservationfood) ? `<div><h5>예약 안내</h5><span>${item.reservationfood}</span></div>` : "";
+                  output += isNotEmpty(item.discountinfofood) ? `<div><h5>할인 정보</h5><span>${item.discountinfofood}</span></div>` : "";
                   output += isNotEmpty(item.packing) ? `<div><h5>포장 가능</h5><span>${item.packing}</span></div>` : "";
-                  output += isNotEmpty(item.chkcreditcardfood)
-                    ? `<div><h5>신용카드 가능 정보</h5><span>${item.chkcreditcardfood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.kidsfacility)
-                    ? `<div><h5>어린이 놀이방 여부</h5><span>${item.kidsfacility}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.smoking)
-                    ? `<div><h5>금연/흡연 여부</h5><span>${item.smoking}</span></div>`
-                    : "";
+                  output += isNotEmpty(item.chkcreditcardfood) ? `<div><h5>신용카드 가능 정보</h5><span>${item.chkcreditcardfood}</span></div>` : "";
+                  output += isNotEmpty(item.kidsfacility) ? `<div><h5>어린이 놀이방 여부</h5><span>${item.kidsfacility}</span></div>` : "";
+                  output += isNotEmpty(item.smoking) ? `<div><h5>금연/흡연 여부</h5><span>${item.smoking}</span></div>` : "";
                   output += isNotEmpty(item.seat) ? `<div><h5>좌석수</h5><span>${item.seat}</span></div>` : "";
                   output += isNotEmpty(item.scalefood) ? `<div><h5>규모</h5><span>${item.scalefood}</span></div>` : "";
-                  output += isNotEmpty(item.opendatefood)
-                    ? `<div><h5>개업일</h5><span>${item.opendatefood}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.infocenterfood)
-                    ? `<div><h5>문의 및 안내</h5><span>${item.infocenterfood}</span></div>`
-                    : "";
+                  output += isNotEmpty(item.opendatefood) ? `<div><h5>개업일</h5><span>${item.opendatefood}</span></div>` : "";
+                  output += isNotEmpty(item.infocenterfood) ? `<div><h5>문의 및 안내</h5><span>${item.infocenterfood}</span></div>` : "";
                   // output += isNotEmpty(item.lcnsno) ? `<div><h5>인허가 번호</h5><span>${item.lcnsno}</span></div>` : "";
                   output += `</div>`;
                   break;
@@ -310,39 +266,19 @@
                   break;
                 case "petTour":
                   output += `<div class="detail-content-wrapper detail-content-flex">`;
-                  output += isNotEmpty(item.acmpyTypeCd)
-                    ? `<div><h5>동반 가능 여부</h5><span>${item.acmpyTypeCd}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.acmpyPsblCpam)
-                    ? `<div><h5>동반 가능 동물 조건</h5><span>${item.acmpyPsblCpam}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.relaPosesFclty)
-                    ? `<div><h5>관련 구비 시설</h5><span>${item.relaPosesFclty}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.relaFrnshPrdlst)
-                    ? `<div><h5>관련 비치 품목</h5><span>${item.relaFrnshPrdlst}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.relaPurcPrdlst)
-                    ? `<div><h5>관련 구매 품목</h5><span>${item.relaPurcPrdlst}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.relaRntlPrdlst)
-                    ? `<div><h5>관련 렌탈 품목</h5><span>${item.relaRntlPrdlst}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.acmpyNeedMtr)
-                    ? `<div><h5>동반 시 필요 사항</h5><span>${item.acmpyNeedMtr}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.relaAcdntRiskMtr)
-                    ? `<div><h5>관련 사고 대비 사항</h5><span>${item.relaAcdntRiskMtr}</span></div>`
-                    : "";
-                  output += isNotEmpty(item.etcAcmpyInfo)
-                    ? `<div><h5>기타 동반 정보</h5><span>${item.etcAcmpyInfo}</span></div>`
-                    : "";
+                  output += isNotEmpty(item.acmpyTypeCd) ? `<div><h5>동반 가능 여부</h5><span>${item.acmpyTypeCd}</span></div>` : "";
+                  output += isNotEmpty(item.acmpyPsblCpam) ? `<div><h5>동반 가능 동물 조건</h5><span>${item.acmpyPsblCpam}</span></div>` : "";
+                  output += isNotEmpty(item.relaPosesFclty) ? `<div><h5>관련 구비 시설</h5><span>${item.relaPosesFclty}</span></div>` : "";
+                  output += isNotEmpty(item.relaFrnshPrdlst) ? `<div><h5>관련 비치 품목</h5><span>${item.relaFrnshPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.relaPurcPrdlst) ? `<div><h5>관련 구매 품목</h5><span>${item.relaPurcPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.relaRntlPrdlst) ? `<div><h5>관련 렌탈 품목</h5><span>${item.relaRntlPrdlst}</span></div>` : "";
+                  output += isNotEmpty(item.acmpyNeedMtr) ? `<div><h5>동반 시 필요 사항</h5><span>${item.acmpyNeedMtr}</span></div>` : "";
+                  output += isNotEmpty(item.relaAcdntRiskMtr) ? `<div><h5>관련 사고 대비 사항</h5><span>${item.relaAcdntRiskMtr}</span></div>` : "";
+                  output += isNotEmpty(item.etcAcmpyInfo) ? `<div><h5>기타 동반 정보</h5><span>${item.etcAcmpyInfo}</span></div>` : "";
                   output += `</div>`;
                   break;
                 case "image":
-                  output += isNotEmpty(item.originimgurl)
-                    ? `<li style="background-image: url(${item.originimgurl})"><div class="overlay"></div></li>`
-                    : "";
+                  output += isNotEmpty(item.originimgurl) ? `<li style="background-image: url(${item.originimgurl})"><div class="overlay"></div></li>` : "";
               }
             });
             if (apiType == "info") {
@@ -497,9 +433,7 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">
-            <i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점
-          </h2>
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft"><i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점(김용진)</h2>
 
           <div class="row row-bottom-padded-md wrapper-restaurants-detail">
             <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>

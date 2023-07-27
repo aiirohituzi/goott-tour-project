@@ -8,13 +8,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>음식점 정보</title>
+    <title>음식점 정보(김용진)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta
-      name="keywords"
-      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
-    />
+    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -90,8 +87,7 @@
 
     <script>
       // 앱 키
-      const apiKey =
-        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 메뉴를 출력할 element의 id 집합
       const selectElementIds = {
         area: "#area",
@@ -217,10 +213,7 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(
-                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
-                responseXML.getElementsByTagName("errMsg")[0].outerText
-              );
+              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -241,11 +234,7 @@
               output += `<div class="blog-entry" onclick="viewDetail('${contentId}');">`;
               output += `<a href="#" class="blog-img">`;
               output += `<img src="${
-                item.firstimage != ""
-                  ? item.firstimage
-                  : item.firstimage2 != ""
-                  ? item.firstimage2
-                  : "../../images/noimage_restaurants.png"
+                item.firstimage != "" ? item.firstimage : item.firstimage2 != "" ? item.firstimage2 : "../../images/noimage_restaurants.png"
               }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
               output += `<div class="desc">`;
               output += `<h3>`;
@@ -253,14 +242,10 @@
               output += `</h3>`;
               output += `<p>${item.addr1}${item.addr2 != "" ? " " + item.addr2 : ""}</p>`;
               output += `<div class="desc-flex margin-bottom-0">`;
-              output += `<span><small>등록일</small></span><span><small>${stringToDate(
-                item.createdtime
-              )}</small><span>`;
+              output += `<span><small>등록일</small></span><span><small>${stringToDate(item.createdtime)}</small><span>`;
               output += `</div>`;
               output += `<div class="desc-flex">`;
-              output += `<span><small>수정일</small></span><span><small>${stringToDate(
-                item.modifiedtime
-              )}</small></span>`;
+              output += `<span><small>수정일</small></span><span><small>${stringToDate(item.modifiedtime)}</small></span>`;
               output += `</div>`;
               output += `<div class="desc-footer">`;
               output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
@@ -283,9 +268,7 @@
           if (totalPage <= 10) {
             // 페이지가 10개 이하, 이전, 다음 없음
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else if (totalPage - pageNo < 10) {
             // 마지막 페이지 구간, 다음 없음
@@ -293,9 +276,7 @@
             // console.log(Math.floor(pageNo / 10) * 10 + 1);
             // console.log(totalPage);
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else {
             // 페이지가 10개 초과이고 마지막 구간도 아님, 이전, 다음 모두 존재
@@ -303,9 +284,7 @@
               pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
             }
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= Math.floor(pageNo / 10) * 10 + 10; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${
-                i == pageNo ? " active" : ""
-              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
             pageOutput += `<a href="#" class="btn btn-primary btn-page-next" id="btnNext" onclick="pageControlHandler(this.id);">다음</a>`;
           }
@@ -374,10 +353,7 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(
-                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
-                responseXML.getElementsByTagName("errMsg")[0].outerText
-              );
+              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -471,7 +447,7 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점</h2>
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점(김용진)</h2>
           <div class="wrapper-category animate-box" data-animate-effect="fadeInLeft">
             <div>
               <small>광역시/시</small>
