@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>음식점 정보(김용진)</title>
+    <title>관광지 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
     <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -107,15 +107,15 @@
       // 각 기능별 호출 api의 url 집합
       const urls = {
         list: function (areaCode, sigunguCode, cat3Code, pageNo) {
-          return `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A05&cat2=A0502&cat3=${cat3Code}&_type=json`;
+          return `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=12&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A01&cat2=A0101&cat3=${cat3Code}&_type=json`;
         },
         area: `http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=${apiKey}&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
         sigungu: function (areaCode) {
           return `http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=${apiKey}&areaCode=${areaCode}&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
         },
-        cat3: `http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=${apiKey}&cat1=A05&cat2=A0502&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
+        cat3: `http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=${apiKey}&cat1=A01&cat2=A0101&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`,
         keyword: function (areaCode, sigunguCode, cat3Code, pageNo, keyword) {
-          return `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=39&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A05&cat2=A0502&cat3=${cat3Code}&numOfRows=${numOfRows}&keyword=${keyword}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+          return `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?ServiceKey=${apiKey}&listYN=Y&arrange=A&contentTypeId=12&areaCode=${areaCode}&sigunguCode=${sigunguCode}&cat1=A01&cat2=A0101&cat3=${cat3Code}&numOfRows=${numOfRows}&keyword=${keyword}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
         },
       };
       const favoritesState = {
@@ -406,14 +406,14 @@
         <nav id="fh5co-main-menu" role="navigation">
           <ul>
             <li><a href="../../index.html">Home</a></li>
-            <li><a href="../tour/list.html">Tour</a></li>
+            <li class="fh5co-active"><a href="../tour/list.html">Tour</a></li>
             <li><a href="../culture/list.html">Culture</a></li>
             <li><a href="../festival/list.html">Festival</a></li>
             <li><a href="../travel/list.html">Travel</a></li>
             <li><a href="../leisure/list.html">Leisure</a></li>
             <li><a href="../lodge/list.html">Lodge</a></li>
             <li><a href="../shopping/list.html">Shopping</a></li>
-            <li class="fh5co-active"><a href="../restaurants/list.html">Restaurants</a></li>
+            <li><a href="../restaurants/list.html">Restaurants</a></li>
           </ul>
         </nav>
 
@@ -447,7 +447,11 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">음식점(김용진)</h2>
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">관광지</h2>
+          <div class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">
+            <small>모양만 만들어 두기 위해 파라메터만 변경하여 음식점 페이지 코드 복사</small><br />
+            <small>대분류 자연, 중분류 자연관광지 고정, 소분류만 선택 가능</small>
+          </div>
           <div class="wrapper-category animate-box" data-animate-effect="fadeInLeft">
             <div>
               <small>광역시/시</small>

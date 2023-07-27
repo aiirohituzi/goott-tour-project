@@ -1,0 +1,508 @@
+/* #e2eed1; secondColor 투명도 제거 컬러 코드 */
+.blog-entry {
+  cursor: pointer;
+}
+.blog-entry .blog-img img {
+  height: 230px;
+  object-fit: cover;
+  object-position: center;
+}
+.blog-entry .desc {
+  min-height: 500px;
+}
+.blog-entry .desc h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid #fff0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.blog-entry .desc-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.blog-entry .desc-flex.margin-bottom-0 {
+  margin-bottom: 0;
+}
+.blog-entry .desc-flex span {
+  width: fit-content;
+  margin-bottom: 0;
+  margin-right: 7px;
+}
+.blog-entry .desc-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.blog-entry .desc-footer .lead {
+  margin-bottom: 0;
+}
+.blog-entry i.icon-star3 {
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: var(--firstColor);
+  font-size: 40px;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+  opacity: 0.5;
+}
+.blog-entry i.icon-star3:hover {
+  color: var(--firstHoverColor);
+  opacity: 0.9;
+}
+.blog-entry i.icon-star3.active {
+  color: var(--firstHoverColor);
+  opacity: 1;
+}
+.blog-entry i.icon-star3.active:hover {
+  opacity: 0.9;
+}
+@media screen and (max-width: 768px) {
+  .blog-entry .blog-img img {
+    width: 100%;
+    height: 320px;
+  }
+  .blog-entry .desc {
+    min-height: unset;
+  }
+}
+
+.wrapper-category {
+  display: flex;
+}
+@media screen and (max-width: 1200px) {
+  .wrapper-category {
+    flex-direction: column;
+  }
+  .wrapper-category select {
+    width: 100%;
+  }
+  .wrapper-category > div {
+    margin-bottom: 5px;
+  }
+}
+.wrapper-category a {
+  margin: 0;
+}
+.wrapper-category select {
+  box-sizing: border-box;
+  height: 45.5px;
+}
+.wrapper-category > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 5px;
+}
+.wrapper-category input {
+  height: 45.5px;
+}
+@media screen and (max-width: 1200px) {
+  .wrapper-total-count {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .wrapper-total-count {
+    font-size: 12px;
+  }
+}
+
+.icon-arrow-back.btn-back {
+  cursor: pointer;
+  color: var(--firstColor);
+  font-size: 30px;
+  align-self: center;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+}
+.icon-arrow-back.btn-back:hover {
+  opacity: 0.7;
+}
+.wrapper-restaurants-detail {
+  padding: 20px;
+}
+.wrapper-restaurants-detail #detailMap {
+  display: none;
+}
+.wrapper-restaurants-detail #detailMap h5 {
+  margin-bottom: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper {
+  padding: 20px;
+  box-shadow: 2px 2px 6px #aaa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper > div {
+  margin-bottom: 20px;
+}
+.wrapper-restaurants-detail .detail-content-wrapper > div:last-child {
+  margin-bottom: 0;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title h3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3 {
+  cursor: pointer;
+  color: var(--firstColor);
+  font-size: 35px;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+  opacity: 0.5;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3:hover {
+  color: var(--firstHoverColor);
+  opacity: 0.9;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3.active {
+  color: var(--firstHoverColor);
+  opacity: 1;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title i.icon-star3.active:hover {
+  opacity: 0.9;
+}
+.wrapper-restaurants-detail .detail-content-wrapper .detail-title > div {
+  display: flex;
+  flex-direction: column;
+}
+.wrapper-restaurants-detail .detail-content-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.wrapper-restaurants-detail .detail-content-flex > div {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 5px;
+}
+.wrapper-restaurants-detail .detail-content-flex h5 {
+  margin: 0;
+}
+
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #dddddd;
+  z-index: 999;
+}
+.loading-indicator img {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  z-index: 1000;
+}
+
+.flexslider {
+  border: none;
+  z-index: 1;
+  width: 650px;
+  margin: auto;
+  padding: 5px;
+  box-shadow: 2px 2px 6px #aaa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.flexslider .slides {
+  position: relative;
+  overflow: hidden;
+}
+.flexslider .slides .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "";
+  /* background: rgba(0, 0, 0, 0.3); */
+  border-radius: 4px;
+}
+.flexslider .slides li {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  min-height: 400px;
+  position: relative;
+  border-radius: 4px;
+}
+.flexslider .flex-control-nav {
+  bottom: 20px;
+  z-index: 1000;
+  right: 20px;
+  float: right;
+  width: auto;
+}
+.flexslider .flex-control-nav li {
+  display: block;
+  margin-bottom: 10px;
+}
+.flexslider .flex-control-nav li a {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+}
+.flexslider .flex-control-nav li a.flex-active {
+  cursor: pointer;
+  background: var(--firstColor);
+  border: 2px solid var(--secondColor);
+}
+.flexslider .flex-direction-nav {
+  display: none;
+}
+@media screen and (max-width: 1200px) {
+  .flexslider {
+    width: 400px;
+  }
+  .flexslider .slides li {
+    min-height: 300px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .flexslider {
+    width: 100%;
+  }
+  .flexslider .slides li {
+    min-height: 400px;
+  }
+}
+
+.page {
+  margin: auto;
+  width: fit-content;
+  white-space: nowrap;
+}
+.page a {
+  width: 50px;
+  padding: 8px !important;
+  margin: 0 2px;
+}
+.page .active {
+  background-color: var(--firstHoverColor);
+  border-color: var(--firstColor);
+}
+.page .btn-page-prev {
+  width: 60px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.page .btn-page-next {
+  width: 60px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+@media screen and (max-width: 1200px) {
+  .page a {
+    width: 30px;
+    font-size: 12px;
+    padding: 5px !important;
+  }
+  .page .btn-page-prev {
+    width: 40px;
+  }
+  .page .btn-page-next {
+    width: 40px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .page a {
+    width: 25px;
+    font-size: 10px;
+    padding: 5px 0 !important;
+    /* margin: 0 1px; */
+  }
+  .page .btn-page-prev {
+    width: 30px;
+  }
+  .page .btn-page-next {
+    width: 30px;
+  }
+}
+
+.favorites {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  box-sizing: border-box;
+  background-color: var(--secondColor);
+  width: 300px;
+  height: 100vh;
+  z-index: 999;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+  box-shadow: -2px -2px 4px #ccc;
+}
+.favorites .btn-toggle-favorite {
+  position: absolute;
+  top: 10px;
+  left: -60px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--firstColor);
+  opacity: 0.7;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 2px 2px 4px #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.favorites .btn-toggle-favorite:hover {
+  background-color: var(--firstHoverColor);
+}
+.favorites .btn-toggle-favorite i {
+  font-size: 40px;
+  color: #fff;
+}
+.favorites .wrapper-favorites {
+  overflow-y: scroll;
+  height: 100vh;
+}
+.favorites .wrapper-favorites h3 {
+  padding-left: 10px;
+  margin: 20px;
+  border-left: 5px solid var(--firstColor);
+}
+.favorites .wrapper-favorites ul {
+  list-style-type: none;
+  padding: 10px;
+}
+.favorites .wrapper-favorites li {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #000;
+  border: 2px solid var(--firstColor);
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px #999;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+}
+.favorites .wrapper-favorites li:hover {
+  box-shadow: 2px 2px 4px #555;
+  opacity: 0.7;
+}
+.favorites .wrapper-favorites li > div {
+  width: 50%;
+  align-self: center;
+}
+.favorites .wrapper-favorites li > div:last-child {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.favorites .wrapper-favorites img {
+  width: 100%;
+  object-fit: cover;
+  height: 100px;
+  border-radius: 6px;
+}
+.favorites .wrapper-favorites li i {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--firstColor);
+  cursor: pointer;
+  font-size: 30px;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+}
+.favorites .wrapper-favorites li i:hover {
+  opacity: 0.7;
+  color: var(--firstHoverColor);
+}
+
+.toast-message {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  top: 7vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  border: 1px solid var(--firstColor);
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px #00000055;
+  color: var(--firstColor);
+  background-color: #e2eed1aa;
+  padding: 7px;
+  font-size: 20px;
+  opacity: 0;
+  cursor: default;
+}
+.toast-message.on {
+  animation: toast 3000ms;
+}
+.toast-message i {
+  font-size: 25px;
+}
+.toast-message i:hover {
+  color: var(--firstHoverColor);
+}
+@keyframes toast {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+    cursor: pointer;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
+#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
+#category li.on {background: #eee;}
+#category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
+#category li:last-child{margin-right:0;border-right:0;}
+#category li span {display: block;margin:0 auto 3px;width:27px;height: 28px;}
+#category li .category_bg {background:url(../../images/restaurants_places_category.png) no-repeat;}
+#category li .parking {background-position: -10px 0;}
+#category li .mart {background-position: -10px -36px;}
+#category li .pharmacy {background-position: -10px -72px;}
+#category li .oil {background-position: -10px -108px;}
+#category li .cafe {background-position: -10px -144px;}
+#category li .store {background-position: -10px -180px;}
+#category li.on .category_bg {background-position-x:-46px;}
+.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');}
+.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
+.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
+.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: var(--firstColor);background: var(--firstColor) url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+.placeinfo .tel {color:#0f7833;}
+.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
