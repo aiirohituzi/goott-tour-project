@@ -1,18 +1,15 @@
 :root {
   --firstColor: #064420;
   --firstHoverColor: #09632e;
-  --secondColor: #E2EED1;
+  --secondColor: #e2eed1;
   --errorColor: #fd5e53;
 }
 
 @font-face {
   font-family: "icomoon";
   src: url("../fonts/icomoon/icomoon.eot?srf3rx");
-  src: url("../fonts/icomoon/icomoon.eot?srf3rx#iefix")
-      format("embedded-opentype"),
-    url("../fonts/icomoon/icomoon.ttf?srf3rx") format("truetype"),
-    url("../fonts/icomoon/icomoon.woff?srf3rx") format("woff"),
-    url("../fonts/icomoon/icomoon.svg?srf3rx#icomoon") format("svg");
+  src: url("../fonts/icomoon/icomoon.eot?srf3rx#iefix") format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf?srf3rx") format("truetype"),
+    url("../fonts/icomoon/icomoon.woff?srf3rx") format("woff"), url("../fonts/icomoon/icomoon.svg?srf3rx#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -118,10 +115,16 @@ figure figcaption {
   left: 0;
   /* overflow-y: scroll; */
   z-index: 1001;
-  -webkit-transition: 0.5s;
+  /* -webkit-transition: 0.5s;
   -o-transition: 0.5s;
-  transition: 0.5s;
+  transition: 0.5s; */
   background-color: var(--secondColor);
+}
+@media screen and (max-height: 720px) {
+  #fh5co-aside {
+    padding-top: 40px;
+    padding-bottom: 20px;
+  }
 }
 @media screen and (max-width: 1200px) {
   #fh5co-aside {
@@ -145,6 +148,12 @@ figure figcaption {
   margin-bottom: 2em;
   text-transform: uppercase;
   font-size: 38px;
+}
+@media screen and (max-height: 720px) {
+  #fh5co-aside #fh5co-logo {
+    font-size: 30px;
+    margin-bottom: 0.7em;
+  }
 }
 @media screen and (max-width: 768px) {
   #fh5co-aside #fh5co-logo {
@@ -187,6 +196,14 @@ figure figcaption {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
+}
+@media screen and (max-height: 720px) {
+  #fh5co-aside #fh5co-main-menu ul li {
+    margin: 0 0 10px 0;
+  }
+  #fh5co-aside #fh5co-main-menu ul li a {
+    font-size: 11px;
+  }
 }
 #fh5co-aside #fh5co-main-menu ul li a:after {
   content: "";
@@ -427,13 +444,7 @@ figure figcaption {
   font-size: 20px;
   color: #fff;
 }
-#fh5co-hero
-  .flexslider
-  .slider-text
-  > .slider-text-inner
-  s
-  .fh5co-lead
-  .icon-heart {
+#fh5co-hero .flexslider .slider-text > .slider-text-inner s .fh5co-lead .icon-heart {
   color: #d9534f;
 }
 #fh5co-hero .flexslider .slider-text > .slider-text-inner .btn {
