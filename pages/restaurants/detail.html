@@ -11,7 +11,10 @@
     <title>음식점 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+    <meta
+      name="keywords"
+      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
+    />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -80,92 +83,22 @@
     <script src="./js/cookie.js"></script>
     <!-- 찜 목록 관련 함수 -->
     <script src="./js/restaurants.js"></script>
+    <!-- KakaoMap API -->
+    <script
+      type="text/javascript"
+      src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e1e0c5e9d5b086334529c494222162e0&libraries=services"
+    ></script>
+    <!-- KakaoMap 관련 함수 -->
+    <script src="./js/restaurants_kakaomap.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></s>
 	<![endif]-->
 
-    <!-- 
-    contentTypeId : 관광타입
-      39 : 음식점
-    areaCode : 광역시/도
-      1 : 서울
-      2 : 인천
-      3 : 대전
-      4 : 대구
-      5 : 광주
-      6 : 부산
-      7 : 울산
-      8 : 세종특별자치시
-      9 : 경기도
-      10 : 강원특별자치도
-      11 : 충청북도
-      12 : 충청남도
-      13 : 경상북도
-      14 : 경상남도
-      15 : 전라북도
-      16 : 전라남도
-      17 : 제주도
-    sigunguCode : 시/군/구
-      areaCode를 기준으로 하단에 표시된 api를 통해 얻어올 수 있음
-      1 : 서울 : 25개
-      2 : 인천 : 10개
-      3 : 대전 : 5개
-      4 : 대구 : 9개
-      5 : 광주 : 5개
-      6 : 부산 : 16개
-      7 : 울산 : 5개
-      8 : 세종특별자치시 : 1개
-      9 : 경기도 : 없음
-      10 : 강원특별자치도 : 없음
-      11 : 충청북도 : 없음
-      12 : 충청남도 : 없음
-      13 : 경상북도 : 없음
-      14 : 경상남도 : 없음
-      15 : 전라북도 : 없음
-      16 : 전라남도 : 없음
-      17 : 제주도 : 없음
-    cat1 : 대분류 코드
-      A05 : 음식
-    cat2 : 중분류 코드
-      A0502 : 음식점
-    cat3 : 소분류 코드
-      A05020100 : 한식
-      A05020200 : 서양식
-      A05020300 : 일식
-      A05020400 : 중식
-      A05020700 : 이색음식점
-      A05020900 : 카페/전통찻집
-      A05021000 : 클럽
-  	 -->
-    <!-- 
-      공통정보조회 url (기본정보)
-		  http://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json
-      소개정보조회 url (이용안내)
-      http://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=(***콘텐츠id***)&contentTypeId=39&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
-      반복정보조회 url (상세정보)
-      http://apis.data.go.kr/B551011/KorService1/detailInfo1?contentId=(***콘텐츠id***)&contentTypeId=39&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
-      반려동물여행정보조회 url (반려동물정보)
-      http://apis.data.go.kr/B551011/KorService1/detailPetTour1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&_type=json
-      이미지조회 url (슬라이더용)
-      http://apis.data.go.kr/B551011/KorService1/detailImage1?contentId=(***콘텐츠id***)&serviceKey=(***apiKey***)&MobileOS=ETC&MobileApp=AppTest&imageYN=Y&subImageYN=Y&_type=json
-
-
-      기본정보 ex
-      https://apis.data.go.kr/B551011/KorService1/detailCommon1?contentId=2901530&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y
-      이용안내 ex
-      https://apis.data.go.kr/B551011/KorService1/detailIntro1?contentId=2901530&contentTypeId=39&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
-      상세정보 ex
-      https://apis.data.go.kr/B551011/KorService1/detailInfo1?contentId=2752202&contentTypeId=39&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
-      반려동물 ex
-      http://apis.data.go.kr/B551011/KorService1/detailPetTour1?contentId=2911323&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest
-      이미지 ex
-      http://apis.data.go.kr/B551011/KorService1/detailImage1?contentId=2901530&serviceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&MobileOS=ETC&MobileApp=AppTest&imageYN=Y&subImageYN=Y
-		-->
-
     <script>
       // 앱 키
-      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey =
+        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 데이터를 출력할 element의 id 집합
       const outputElementIds = {
         common: "#detailCommon",
@@ -213,7 +146,6 @@
         let contentId = "";
         $(function () {
           if (getParameter("contentId") == null || getParameter("contentId") == -1) {
-            // TODO: contentId 없을 시 동작 처리
             // location.href = "areaList.html";
           } else {
             contentId = getParameter("contentId");
@@ -223,6 +155,7 @@
             getRestaurantDetail("info", contentId);
             getRestaurantDetail("petTour", contentId);
             getRestaurantDetail("image", contentId);
+            // drawKakaoMap("37.2971166997", "126.8580034344");
           }
         });
 
@@ -246,20 +179,9 @@
         // ---------------------------------------------------------------
       });
 
-      /*
-        onload 동작 예상
-        1. contentId를 queryString으로부터 받아옴
-        2. 공통정보조회, 소개정보조회, 반복정보조회, 반려동물여행정보조회, 이미지조회 api 를 통해 총 5개의 response를 받아옴
-        2-1. 반복정보, 반려동물여행정보, 이미지는 컨텐츠에 따라 있을 수도 없을 수도 있음 그에 따른 dom의 형태를 동적으로 표현해야함
-        3. 받은 데이터들을 취합하여 상세보기 화면을 만들어 출력함
-        예외. contentId에 대한 정보가 조회되지 않을 경우 잘못된 경로라는 안내 메시지와 함께 목록 페이지로 돌려보냄 (timeout을 이용하여 메시지도 확인하고 몇 초 뒤에 이동될 것인지 안내함)
-
-        추가구현 : 페이지네이션
-      */
-
       function getRestaurantDetail(apiType, contentId) {
         $(".loading-indicator").show();
-        console.log(urls[apiType](contentId));
+        // console.log(urls[apiType](contentId));
 
         $.ajax({
           url: urls[apiType](contentId), // 데이터를 수신 받을 서버 주소
@@ -279,7 +201,10 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
+              console.log(
+                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
+                responseXML.getElementsByTagName("errMsg")[0].outerText
+              );
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -306,39 +231,74 @@
                   output += `<div class="detail-title">`;
                   output += `<h3 class="fh5co-heading">${item.title}<i id="i${item.contentId}" class="icon-star3 favoriteIcon" onclick="toggleFavorites('${item.contentId}', '${item.title}', '${item.firstimage}');"></i></h3>`;
                   output += `<div>`;
-                  output += `${isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""}`;
-                  output += `${isNotEmpty(item.modifiedtime) ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>" : ""}`;
+                  output += `${
+                    isNotEmpty(item.createdtime) ? "<small>등록일 : " + stringToDate(item.createdtime) + "</small>" : ""
+                  }`;
+                  output += `${
+                    isNotEmpty(item.modifiedtime)
+                      ? "<small>수정일 : " + stringToDate(item.modifiedtime) + "</small>"
+                      : ""
+                  }`;
                   output += `</div>`;
                   output += `</div>`;
                   output += isNotEmpty(item.overview) ? `<div>${item.overview}</div>` : "";
                   output += `<div class="detail-content-flex">`;
                   output += isNotEmpty(item.addr1)
-                    ? `<div><h5>주소</h5><span>${item.addr1}${isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""}</span></div>`
+                    ? `<div><h5>주소</h5><span>${item.addr1}${
+                        isNotEmpty(item.addr2) ? ", 상세주소 : " + item.addr2 : ""
+                      }</span></div>`
                     : "";
                   output += isNotEmpty(item.zipcode) ? `<div><h5>우편번호</h5><span>${item.zipcode}</span></div>` : "";
                   // output += isNotEmpty(item.telname) ? `<div><h5>전화번호명</h5><span>${item.telname}</span></div>` : "";
                   output += isNotEmpty(item.tel) ? `<div><h5>전화번호</h5><span>${item.tel}</span></div>` : "";
-                  output += isNotEmpty(item.homepage) ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>` : "";
+                  output += isNotEmpty(item.homepage)
+                    ? `<div><h5>홈페이지</h5><span>${item.homepage}</span></div>`
+                    : "";
                   output += `</div>`;
                   output += `</div>`;
+                  drawKakaoMap(item.mapy, item.mapx);
                   break;
                 case "intro":
                   output += `<div class="detail-content-wrapper detail-content-flex">`;
-                  output += isNotEmpty(item.firstmenu) ? `<div><h5>대표 메뉴</h5><span>${item.firstmenu}</span></div>` : "";
-                  output += isNotEmpty(item.treatmenu) ? `<div><h5>취급 메뉴</h5><span>${item.treatmenu}</span></div>` : "";
-                  output += isNotEmpty(item.opentimefood) ? `<div><h5>영업시간</h5><span>${item.opentimefood}</span></div>` : "";
-                  output += isNotEmpty(item.restdatefood) ? `<div><h5>쉬는 날</h5><span>${item.restdatefood}</span></div>` : "";
-                  output += isNotEmpty(item.parkingfood) ? `<div><h5>주차 시설</h5><span>${item.parkingfood}</span></div>` : "";
-                  output += isNotEmpty(item.reservationfood) ? `<div><h5>예약 안내</h5><span>${item.reservationfood}</span></div>` : "";
-                  output += isNotEmpty(item.discountinfofood) ? `<div><h5>할인 정보</h5><span>${item.discountinfofood}</span></div>` : "";
+                  output += isNotEmpty(item.firstmenu)
+                    ? `<div><h5>대표 메뉴</h5><span>${item.firstmenu}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.treatmenu)
+                    ? `<div><h5>취급 메뉴</h5><span>${item.treatmenu}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.opentimefood)
+                    ? `<div><h5>영업시간</h5><span>${item.opentimefood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.restdatefood)
+                    ? `<div><h5>쉬는 날</h5><span>${item.restdatefood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.parkingfood)
+                    ? `<div><h5>주차 시설</h5><span>${item.parkingfood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.reservationfood)
+                    ? `<div><h5>예약 안내</h5><span>${item.reservationfood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.discountinfofood)
+                    ? `<div><h5>할인 정보</h5><span>${item.discountinfofood}</span></div>`
+                    : "";
                   output += isNotEmpty(item.packing) ? `<div><h5>포장 가능</h5><span>${item.packing}</span></div>` : "";
-                  output += isNotEmpty(item.chkcreditcardfood) ? `<div><h5>신용카드 가능 정보</h5><span>${item.chkcreditcardfood}</span></div>` : "";
-                  output += isNotEmpty(item.kidsfacility) ? `<div><h5>어린이 놀이방 여부</h5><span>${item.kidsfacility}</span></div>` : "";
-                  output += isNotEmpty(item.smoking) ? `<div><h5>금연/흡연 여부</h5><span>${item.smoking}</span></div>` : "";
+                  output += isNotEmpty(item.chkcreditcardfood)
+                    ? `<div><h5>신용카드 가능 정보</h5><span>${item.chkcreditcardfood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.kidsfacility)
+                    ? `<div><h5>어린이 놀이방 여부</h5><span>${item.kidsfacility}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.smoking)
+                    ? `<div><h5>금연/흡연 여부</h5><span>${item.smoking}</span></div>`
+                    : "";
                   output += isNotEmpty(item.seat) ? `<div><h5>좌석수</h5><span>${item.seat}</span></div>` : "";
                   output += isNotEmpty(item.scalefood) ? `<div><h5>규모</h5><span>${item.scalefood}</span></div>` : "";
-                  output += isNotEmpty(item.opendatefood) ? `<div><h5>개업일</h5><span>${item.opendatefood}</span></div>` : "";
-                  output += isNotEmpty(item.infocenterfood) ? `<div><h5>문의 및 안내</h5><span>${item.infocenterfood}</span></div>` : "";
+                  output += isNotEmpty(item.opendatefood)
+                    ? `<div><h5>개업일</h5><span>${item.opendatefood}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.infocenterfood)
+                    ? `<div><h5>문의 및 안내</h5><span>${item.infocenterfood}</span></div>`
+                    : "";
                   // output += isNotEmpty(item.lcnsno) ? `<div><h5>인허가 번호</h5><span>${item.lcnsno}</span></div>` : "";
                   output += `</div>`;
                   break;
@@ -350,20 +310,39 @@
                   break;
                 case "petTour":
                   output += `<div class="detail-content-wrapper detail-content-flex">`;
-                  output += isNotEmpty(item.acmpyTypeCd) ? `<div><h5>동반 가능 여부</h5><span>${item.acmpyTypeCd}</span></div>` : "";
-                  output += isNotEmpty(item.acmpyPsblCpam) ? `<div><h5>동반 가능 동물 조건</h5><span>${item.acmpyPsblCpam}</span></div>` : "";
-                  output += isNotEmpty(item.relaPosesFclty) ? `<div><h5>관련 구비 시설</h5><span>${item.relaPosesFclty}</span></div>` : "";
-                  output += isNotEmpty(item.relaFrnshPrdlst) ? `<div><h5>관련 비치 품목</h5><span>${item.relaFrnshPrdlst}</span></div>` : "";
-                  output += isNotEmpty(item.relaPurcPrdlst) ? `<div><h5>관련 구매 품목</h5><span>${item.relaPurcPrdlst}</span></div>` : "";
-                  output += isNotEmpty(item.relaRntlPrdlst) ? `<div><h5>관련 렌탈 품목</h5><span>${item.relaRntlPrdlst}</span></div>` : "";
-                  output += isNotEmpty(item.acmpyNeedMtr) ? `<div><h5>동반 시 필요 사항</h5><span>${item.acmpyNeedMtr}</span></div>` : "";
-                  output += isNotEmpty(item.relaAcdntRiskMtr) ? `<div><h5>관련 사고 대비 사항</h5><span>${item.relaAcdntRiskMtr}</span></div>` : "";
-                  output += isNotEmpty(item.etcAcmpyInfo) ? `<div><h5>기타 동반 정보</h5><span>${item.etcAcmpyInfo}</span></div>` : "";
+                  output += isNotEmpty(item.acmpyTypeCd)
+                    ? `<div><h5>동반 가능 여부</h5><span>${item.acmpyTypeCd}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.acmpyPsblCpam)
+                    ? `<div><h5>동반 가능 동물 조건</h5><span>${item.acmpyPsblCpam}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.relaPosesFclty)
+                    ? `<div><h5>관련 구비 시설</h5><span>${item.relaPosesFclty}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.relaFrnshPrdlst)
+                    ? `<div><h5>관련 비치 품목</h5><span>${item.relaFrnshPrdlst}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.relaPurcPrdlst)
+                    ? `<div><h5>관련 구매 품목</h5><span>${item.relaPurcPrdlst}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.relaRntlPrdlst)
+                    ? `<div><h5>관련 렌탈 품목</h5><span>${item.relaRntlPrdlst}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.acmpyNeedMtr)
+                    ? `<div><h5>동반 시 필요 사항</h5><span>${item.acmpyNeedMtr}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.relaAcdntRiskMtr)
+                    ? `<div><h5>관련 사고 대비 사항</h5><span>${item.relaAcdntRiskMtr}</span></div>`
+                    : "";
+                  output += isNotEmpty(item.etcAcmpyInfo)
+                    ? `<div><h5>기타 동반 정보</h5><span>${item.etcAcmpyInfo}</span></div>`
+                    : "";
                   output += `</div>`;
                   break;
                 case "image":
-                  output += isNotEmpty(item.originimgurl) ? `<li style="background-image: url(${item.originimgurl})"><div class="overlay"></div></li>` : "";
-                // output += isNotEmpty(item.smallimageurl) ? `<div>썸네일<img src="${item.smallimageurl}" /></div>` : "";
+                  output += isNotEmpty(item.originimgurl)
+                    ? `<li style="background-image: url(${item.originimgurl})"><div class="overlay"></div></li>`
+                    : "";
               }
             });
             if (apiType == "info") {
@@ -476,11 +455,15 @@
         <h1 id="fh5co-logo"><a href="../../index.html">Goott Tour</a></h1>
         <nav id="fh5co-main-menu" role="navigation">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../tour/list.html">Tour</a></li>
+            <li><a href="../culture/list.html">Culture</a></li>
+            <li><a href="../festival/list.html">Festival</a></li>
+            <li><a href="../travel/list.html">Travel</a></li>
+            <li><a href="../leisure/list.html">Leisure</a></li>
+            <li><a href="../lodge/list.html">Lodge</a></li>
+            <li><a href="../shopping/list.html">Shopping</a></li>
             <li class="fh5co-active"><a href="list.html">Restaurants</a></li>
-            <li><a href="#">Noname</a></li>
-            <li><a href="#">Noname</a></li>
-            <li><a href="#">Noname</a></li>
           </ul>
         </nav>
 
@@ -514,7 +497,9 @@
 
       <div id="fh5co-main">
         <div class="fh5co-narrow-content">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft"><i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점</h2>
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">
+            <i class="icon-arrow-back btn-back" onclick="toBack();"></i>음식점
+          </h2>
 
           <div class="row row-bottom-padded-md wrapper-restaurants-detail">
             <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft"></div>
@@ -522,105 +507,38 @@
             <div id="detailIntro" class="animate-box" data-animate-effect="fadeInLeft"></div>
             <div id="detailInfo" class="animate-box" data-animate-effect="fadeInLeft"></div>
             <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div>
-
-            <!-- ┌- 목업 데이터 -->
-            <!-- <div id="detailImage" class="flexslider animate-box" data-animate-effect="fadeInLeft">
-              <ul class="slides">
-                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/26/2866226_image2_1.jpg)">
-                  <div class="overlay"></div>
-                </li>
-                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/27/2866227_image2_1.jpg)"><div class="overlay"></div></li>
-                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/28/2866228_image2_1.jpg)"><div class="overlay"></div></li>
-                <li style="background-image: url(http://tong.visitkorea.or.kr/cms/resource/29/2866229_image2_1.jpg)"><div class="overlay"></div></li>
-              </ul>
-            </div>
-            <div id="detailCommon" class="animate-box" data-animate-effect="fadeInLeft">
-              <div class="detail-content-wrapper">
-                <div class="detail-title">
-                  <h3 class="fh5co-heading">제목 : 고모역쭈꾸미</h3>
-                  <div>
-                    <small>등록일 : 2022년 10월 12일 13:49:44</small>
-                    <small>수정일 : 2022년 10월 12일 13:49:58</small>
-                  </div>
-                </div>
-                <div>
-                  고모역쭈꾸미는 대구광역시 수성구 고모동에 있다. 깔끔한 외관과 예스러운 분위기를 연출하는 인테리어가 눈에 띈다. 내부에는 단체석이 마련되어 있어
-                  각종 모임을 하기 좋다. 대표 메뉴는 매콤한 맛이 일품인 쭈꾸미다. 차돌박이나 버섯을 추가해 넣어 먹으면 별미다. 평일 오전 11시 30분부터 오후
-                  2시까지 주문할 수 있는 돌솥 쭈꾸미 정식도 많은 사람이 찾는다. 이 밖에 차돌버섯된장찌개, 계란찜 등도 준비되어 있다. 동대구IC에서 가깝고, 주변에
-                  수성패밀리파크와 국립대구기상과학관이 있다.
-                </div>
-                <div class="detail-content-flex">
-                  <div>
-                    <h5>주소</h5>
-                    <span>대구광역시 수성구 고모로 188</span>
-                  </div>
-                  <div>
-                    <h5>우편번호</h5>
-                    <span>42260</span>
-                  </div>
-                </div>
+            <div id="detailMap" class="animate-box detail-content-wrapper" data-animate-effect="fadeInLeft">
+              <h5>지도</h5>
+              <div class="map_wrap">
+                <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
+                <ul id="category">
+                  <li id="PK6" data-order="0">
+                    <span class="category_bg parking"></span>
+                    주차장
+                  </li>
+                  <li id="MT1" data-order="1">
+                    <span class="category_bg mart"></span>
+                    마트
+                  </li>
+                  <li id="PM9" data-order="2">
+                    <span class="category_bg pharmacy"></span>
+                    약국
+                  </li>
+                  <li id="OL7" data-order="3">
+                    <span class="category_bg oil"></span>
+                    주유소
+                  </li>
+                  <li id="CE7" data-order="4">
+                    <span class="category_bg cafe"></span>
+                    카페
+                  </li>
+                  <li id="CS2" data-order="5">
+                    <span class="category_bg store"></span>
+                    편의점
+                  </li>
+                </ul>
               </div>
             </div>
-            <div id="detailIntro" class="animate-box" data-animate-effect="fadeInLeft">
-              <div class="detail-content-wrapper detail-content-flex">
-                <div>
-                  <h5>대표 메뉴</h5>
-                  <span>쭈꾸미</span>
-                </div>
-                <div>
-                  <h5>취급 메뉴</h5>
-                  <span>돌솥 쭈꾸미 정식, 차돌버섯된장찌개, 계란찜 등</span>
-                </div>
-                <div>
-                  <h5>영업시간</h5>
-                  <span>11:30~22:00, 브레이크 타임 15:00~17:00</span>
-                </div>
-                <div>
-                  <h5>쉬는 날</h5>
-                  <span>월요일</span>
-                </div>
-                <div>
-                  <h5>주차 시설</h5>
-                  <span>있음/주차요금 없음</span>
-                </div>
-                <div>
-                  <h5>포장 가능</h5>
-                  <span>가능</span>
-                </div>
-                <div>
-                  <h5>어린이 놀이방 여부</h5>
-                  <span>0</span>
-                </div>
-                <div>
-                  <h5>신용카드 가능 정보</h5>
-                  <span>가능</span>
-                </div>
-                <div>
-                  <h5>문의 및 안내</h5>
-                  <span>053-793-0204</span>
-                </div>
-                <div>
-                  <h5>인허가 번호</h5>
-                  <span>20150174887</span>
-                </div>
-              </div>
-            </div>
-
-            <div id="detailInfo" class="animate-box" data-animate-effect="fadeInLeft">
-              <div class="detail-content-wrapper detail-content-flex">
-                <div>
-                  <h5>제목</h5>
-                  <span>화장실</span>
-                </div>
-                <div>
-                  <h5>내용</h5>
-                  <span>남녀 구분</span>
-                </div>
-              </div>
-            </div>
-
-            <div id="detailPetTour" class="animate-box" data-animate-effect="fadeInLeft"></div> -->
-            <!-- └- 목업 데이터 -->
           </div>
         </div>
       </div>
