@@ -3,7 +3,6 @@
 // 반환값 : 성공 시 true, 실패 시 false
 function setCookie(key, value, expires) {
   let result = false;
-  console.log(key, value, expires);
 
   if (
     key !== undefined &&
@@ -31,7 +30,7 @@ function getCookie(key) {
   let cookieValue = false;
 
   for (let cookie of cookies) {
-    if (cookie.split("=")[0] === key) {
+    if (cookie.trim().split("=")[0] === key) {
       cookieValue = cookie.split("=")[1];
       break;
     }

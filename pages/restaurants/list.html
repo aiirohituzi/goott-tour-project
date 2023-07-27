@@ -11,7 +11,10 @@
     <title>음식점 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+    <meta
+      name="keywords"
+      content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"
+    />
     <meta name="author" content="FreeHTML5.co" />
 
     <!-- 
@@ -85,71 +88,10 @@
 	<script src="js/respond.min.js"></s>
 	<![endif]-->
 
-    <!-- 
-    contentTypeId : 관광타입
-      39 : 음식점
-    areaCode : 광역시/도
-      1 : 서울
-      2 : 인천
-      3 : 대전
-      4 : 대구
-      5 : 광주
-      6 : 부산
-      7 : 울산
-      8 : 세종특별자치시
-      9 : 경기도
-      10 : 강원특별자치도
-      11 : 충청북도
-      12 : 충청남도
-      13 : 경상북도
-      14 : 경상남도
-      15 : 전라북도
-      16 : 전라남도
-      17 : 제주도
-    sigunguCode : 시/군/구
-      areaCode를 기준으로 하단에 표시된 api를 통해 얻어올 수 있음
-      1 : 서울 : 25개
-      2 : 인천 : 10개
-      3 : 대전 : 5개
-      4 : 대구 : 9개
-      5 : 광주 : 5개
-      6 : 부산 : 16개
-      7 : 울산 : 5개
-      8 : 세종특별자치시 : 1개
-      9 : 경기도 : 없음
-      10 : 강원특별자치도 : 없음
-      11 : 충청북도 : 없음
-      12 : 충청남도 : 없음
-      13 : 경상북도 : 없음
-      14 : 경상남도 : 없음
-      15 : 전라북도 : 없음
-      16 : 전라남도 : 없음
-      17 : 제주도 : 없음
-    cat1 : 대분류 코드
-      A05 : 음식
-    cat2 : 중분류 코드
-      A0502 : 음식점
-    cat3 : 소분류 코드
-      A05020100 : 한식
-      A05020200 : 서양식
-      A05020300 : 일식
-      A05020400 : 중식
-      A05020700 : 이색음식점
-      A05020900 : 카페/전통찻집
-      A05021000 : 클럽
-  	 -->
-    <!-- 
-		음식점 소분류 코드 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/categoryCode1?ServiceKey=EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D&cat1=A05&cat2=A0502&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
-  	지역코드(광역시/시) : areaCode 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&numOfRows=17&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
-		지역코드(시/군/구) : 넘겨준 areaCode(광역시/시 값) 기반으로 sigunguCode 받아오는 api url
-		http://apis.data.go.kr/B551011/KorService1/areaCode1?ServiceKey=(***API KEY***)&areaCode=(***광역시/시 코드***)&numOfRows=25&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
-		-->
-
     <script>
       // 앱 키
-      const apiKey = "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
+      const apiKey =
+        "EmPrDl5kZrOzoYiaEQ1J%2BrysQf8dbws8ZMv4KCelNelSrm4hGQfxXmg2X6jumQex%2FRK72yCvA5fNzAs%2F9LFkpQ%3D%3D";
       // 메뉴를 출력할 element의 id 집합
       const selectElementIds = {
         area: "#area",
@@ -250,19 +192,6 @@
         // ---------------------------------------------------------------
       });
 
-      /*
-        onload 동작 예상
-        1. 제일 먼저 기본값으로 설정된 지역코드, 카테고리코드로 리스트를 요청함
-        2. 파라메터들의 최상위 메뉴를 만들기 위해 areaCode의 광역시/도 코드와 cat3(소분류) 코드 목록을 요청함
-        3. 받은 데이터들로 선택 메뉴 두개와 목록이 완성됨
-        4. 광역시/도 메뉴에서 무언가 항목을 선택하면 그 하위 메뉴를 받아오기 위해 선택항목을 파라메터로 다시 시/군/구 코드를 요청함
-        5. 광역시/도 메뉴 옆에 받은 시/군/구 코드 목록을 기반으로 메뉴를 추가함
-        5-1. 만약 광역시/도에서 '전체'를 선택했다면 시/군/구 선택 메뉴를 화면에서 제거하고 내부적으로도 값을 초기화시켜야함
-        6. 검색버튼을 별도로 만들어 쿼리를 자주 요청하지 않도록 제한함
-
-        추가구현 : 페이지네이션
-      */
-
       function getRestaurantsList(pageNo) {
         $(".loading-indicator").show();
         console.log("요청 url [목록]", urls.list(selectedMenus.area, selectedMenus.sigungu, selectedMenus.cat3));
@@ -288,7 +217,10 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
+              console.log(
+                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
+                responseXML.getElementsByTagName("errMsg")[0].outerText
+              );
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -309,7 +241,11 @@
               output += `<div class="blog-entry" onclick="viewDetail('${contentId}');">`;
               output += `<a href="#" class="blog-img">`;
               output += `<img src="${
-                item.firstimage != "" ? item.firstimage : item.firstimage2 != "" ? item.firstimage2 : "../../images/noimage_restaurants.png"
+                item.firstimage != ""
+                  ? item.firstimage
+                  : item.firstimage2 != ""
+                  ? item.firstimage2
+                  : "../../images/noimage_restaurants.png"
               }" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" /></a>`;
               output += `<div class="desc">`;
               output += `<h3>`;
@@ -317,10 +253,14 @@
               output += `</h3>`;
               output += `<p>${item.addr1}${item.addr2 != "" ? " " + item.addr2 : ""}</p>`;
               output += `<div class="desc-flex margin-bottom-0">`;
-              output += `<span><small>등록일</small></span><span><small>${stringToDate(item.createdtime)}</small><span>`;
+              output += `<span><small>등록일</small></span><span><small>${stringToDate(
+                item.createdtime
+              )}</small><span>`;
               output += `</div>`;
               output += `<div class="desc-flex">`;
-              output += `<span><small>수정일</small></span><span><small>${stringToDate(item.modifiedtime)}</small></span>`;
+              output += `<span><small>수정일</small></span><span><small>${stringToDate(
+                item.modifiedtime
+              )}</small></span>`;
               output += `</div>`;
               output += `<div class="desc-footer">`;
               output += `<a href="#" class="lead">자세히 보기 <i class="icon-arrow-right3"></i></a>`;
@@ -331,7 +271,6 @@
               output += `</div>`;
             });
           }
-          // $(".wrapper-restaurants-list").append(output);
           $(".wrapper-restaurants-list").html(output);
 
           updateFavoritesIcon();
@@ -341,23 +280,32 @@
           const totalPage = Math.ceil(totalCount / numOfRows);
           // console.log(totalPage);
           let pageOutput = "";
-          if (totalPage < 11) {
+          if (totalPage <= 10) {
             // 페이지가 10개 이하, 이전, 다음 없음
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${
+                i == pageNo ? " active" : ""
+              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
-          } else if (totalPage - pageNo < 11) {
+          } else if (totalPage - pageNo < 10) {
             // 마지막 페이지 구간, 다음 없음
             pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
+            // console.log(Math.floor(pageNo / 10) * 10 + 1);
+            // console.log(totalPage);
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= totalPage; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${
+                i == pageNo ? " active" : ""
+              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
           } else {
+            // 페이지가 10개 초과이고 마지막 구간도 아님, 이전, 다음 모두 존재
             if (pageNo > 10) {
               pageOutput += `<a href="#" class="btn btn-primary btn-page-prev" id="btnPrev" onclick="pageControlHandler(this.id);">이전</a>`;
             }
             for (let i = Math.floor(pageNo / 10) * 10 + 1; i <= Math.floor(pageNo / 10) * 10 + 10; i++) {
-              pageOutput += `<a href="#" class="btn btn-primary${i == pageNo ? " active" : ""}" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
+              pageOutput += `<a href="#" class="btn btn-primary${
+                i == pageNo ? " active" : ""
+              }" id="${i}" onclick="pageControlHandler(this.id);">${i}</a>`;
             }
             pageOutput += `<a href="#" class="btn btn-primary btn-page-next" id="btnNext" onclick="pageControlHandler(this.id);">다음</a>`;
           }
@@ -426,7 +374,10 @@
             // 통신이 완료되었을 때 호출 되는 콜백함수
             const responseXML = new DOMParser().parseFromString(responseText, "text/html");
             if (responseXML.getElementsByTagName("returnReasonCode").length > 0) {
-              console.log(responseXML.getElementsByTagName("returnReasonCode")[0].outerText, responseXML.getElementsByTagName("errMsg")[0].outerText);
+              console.log(
+                responseXML.getElementsByTagName("returnReasonCode")[0].outerText,
+                responseXML.getElementsByTagName("errMsg")[0].outerText
+              );
               showToast("[일시적인 에러] 잠시 후 다시 시도해주세요");
             }
             $(".loading-indicator").hide();
@@ -478,11 +429,15 @@
         <h1 id="fh5co-logo"><a href="../../index.html">Goott Tour</a></h1>
         <nav id="fh5co-main-menu" role="navigation">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../tour/list.html">Tour</a></li>
+            <li><a href="../culture/list.html">Culture</a></li>
+            <li><a href="../festival/list.html">Festival</a></li>
+            <li><a href="../travel/list.html">Travel</a></li>
+            <li><a href="../leisure/list.html">Leisure</a></li>
+            <li><a href="../lodge/list.html">Lodge</a></li>
+            <li><a href="../shopping/list.html">Shopping</a></li>
             <li class="fh5co-active"><a href="list.html">Restaurants</a></li>
-            <li><a href="#">Noname</a></li>
-            <li><a href="#">Noname</a></li>
-            <li><a href="#">Noname</a></li>
           </ul>
         </nav>
 
@@ -543,19 +498,7 @@
               <span id="totalCount"></span>
             </div>
           </div>
-          <div class="row row-bottom-padded-md wrapper-restaurants-list">
-            <!-- <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-              <div class="blog-entry">
-                <a href="#" class="blog-img"><img src="../../images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
-                <div class="desc">
-                  <h3><a href="#">Inspirational Website</a></h3>
-                  <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
-                  <p>Design must be functional and functionality must be translated into visual aesthetics</p>
-                  <a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
-                </div>
-              </div>
-            </div> -->
-          </div>
+          <div class="row row-bottom-padded-md wrapper-restaurants-list"></div>
           <div class="page"></div>
         </div>
       </div>
